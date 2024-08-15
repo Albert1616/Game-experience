@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @layer base{
-  body{
-    @apply bg-background text-white leading-loose
+  body,html{
+    @apply bg-background text-white leading-loose w-full h-full p-0 m-0
   }
 }
 
