@@ -12,7 +12,7 @@ export default function Home() {
   
 
   return (
-      <main className="w-full h-screen pt-5 px-10">
+      <main className="w-full h-full pt-5 px-32">
           <GamesYear/>
       </main>
   );

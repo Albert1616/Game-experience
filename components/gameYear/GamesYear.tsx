@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import GeneralGame from './GeneralGame'
 import { ApiResponse, Game } from '@/utils/types';
+import GameCard from './GameCard';
+import { API_KEY, BASE_URL } from '@/utils/utils';
 
-let BASE_URL:string = 'https://api.rawg.io/api';
-
-const API_KEY:string = '51ec38f0feb7474ab43e6e64b55e387a';
 
 function GamesYear() {
   const [data, setData] = useState<Game[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [gameId, setGameId] = useState<number>(0);
 
   useEffect(() => {
       fetch(`${BASE_URL}/games?key=${API_KEY}`, {
@@ -18,8 +18,11 @@ function GamesYear() {
       })
       .then((response) => response.json())
       .then((data: ApiResponse) => {
-          setData(data.results || []); // Ajuste de acordo com a estrutura real da resposta
+          setData(data.results.slice(0,5) || []); // Ajuste de acordo com a estrutura real da resposta
           setLoading(false);
+          if(gameId === 0){
+            setGameId(data.results[0].id);
+          }
       })
       .catch((e) => {
           console.error(e);
@@ -28,17 +31,20 @@ function GamesYear() {
       });
   }, []);
 
+  const changeGeneral = (id:number) =>{
+    setGameId(id);
+  }
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
   return (
-    <div className='w-full h-full grid grid-rows-3 gap-2'>
-      <GeneralGame {...data[0]}/>
+    <div className='w-full h-full grid grid-rows-4 gap-2'>
+      <GeneralGame id={gameId}/>
       <div className='grid grid-cols-5 gap-3 text-center row-span-1'>
-        <div className="bg-red-500">teste</div>
-        <div className="bg-red-500">teste</div>
-        <div className="bg-red-500">teste</div>
-        <div className="bg-red-500">teste</div>
-        <div className="bg-red-500">teste</div>
+        {data.map((game) => (
+          <GameCard {...game} isSelected={gameId === game.id ? true : false} key={game.id}
+        onChange={changeGeneral}/>
+        ))}
       </div>
     </div>
   )

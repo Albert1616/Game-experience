@@ -12,3 +12,7 @@ export const LINKS = [
         path:"/contato"
     },
 ]
+
+export let BASE_URL:string = 'https://api.rawg.io/api';
+
+export const API_KEY:string = '51ec38f0feb7474ab43e6e64b55e387a';
