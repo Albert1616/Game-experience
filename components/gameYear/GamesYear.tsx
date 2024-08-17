@@ -1,8 +1,11 @@
+'use client'
+
 import React, { useEffect, useState } from 'react'
 import GeneralGame from './GeneralGame'
 import { ApiResponse, Game } from '@/utils/types';
 import GameCard from './GameCard';
 import { API_KEY, BASE_URL } from '@/utils/utils';
+import { CircularProgress } from '@mui/material';
 
 
 function GamesYear() {
@@ -35,12 +38,12 @@ function GamesYear() {
     setGameId(id);
   }
 
-  if (loading) return <p>Loading...</p>;
+  if(loading) return <div className="container flex flex-col items-center justify-center"><CircularProgress/></div>
   if (error) return <p>{error}</p>;
   return (
     <div className='w-full h-full grid grid-rows-4 gap-2'>
       <GeneralGame id={gameId}/>
-      <div className='grid grid-cols-5 gap-3 text-center row-span-1'>
+      <div className='h-full flex flex-col sm:grid sm:grid-cols-5 gap-3 text-center row-span-1'>
         {data.map((game) => (
           <GameCard {...game} isSelected={gameId === game.id ? true : false} key={game.id}
         onChange={changeGeneral}/>
