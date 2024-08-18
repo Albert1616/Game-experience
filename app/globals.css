@@ -4,7 +4,7 @@
 
 @layer base{
   body,html{
-    @apply bg-background text-white leading-loose w-full h-screen p-0 m-0
+    @apply bg-background text-white leading-loose min-w-full min-h-screen p-0 m-0
   }
 }
 

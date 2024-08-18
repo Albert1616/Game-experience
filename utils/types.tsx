@@ -6,6 +6,11 @@ interface Platform{
     name:string
 }
 
+interface Tag{
+    name:string,
+    id:string
+}
+
 export interface Game{
     id:number,
     name:string,
@@ -13,6 +18,7 @@ export interface Game{
     rating:number,
     genres:Genre[],
     platforms:Platform[],
+    tags:Tag[],
 }
 
 export interface ApiResponse{

@@ -41,7 +41,7 @@ function GamesYear() {
   if(loading) return <div className="container flex flex-col items-center justify-center"><CircularProgress/></div>
   if (error) return <p>{error}</p>;
   return (
-    <div className='w-full h-full grid grid-rows-4 gap-2'>
+    <div className='w-full h-screen grid grid-rows-4 gap-2'>
       <GeneralGame id={gameId}/>
       <div className='h-full flex flex-col sm:grid sm:grid-cols-5 gap-3 text-center row-span-1'>
         {data.map((game) => (
