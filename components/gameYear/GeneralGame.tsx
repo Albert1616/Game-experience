@@ -1,18 +1,14 @@
-import { Game } from "@/utils/types";
+import { GameComplete } from "@/utils/types";
 import { API_KEY, BASE_URL } from "@/utils/utils";
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@mui/material";
-
-interface GeneralGame extends Game{
-    description: string
-}
 
 interface props{
     id:number;
 }
 
 function GeneralGame({id}:props) {
-  const [game, setGame] = useState<GeneralGame>();
+  const [game, setGame] = useState<GameComplete>();
   const [isloading, setIsLoading] = useState<boolean>(true);
   const[description, setDescription] = useState<string>();
 
@@ -22,7 +18,7 @@ function GeneralGame({id}:props) {
         method:"GET",
         headers:{"Content-type": "Application-json"}
     }).then((response) => response.json())
-      .then((data: GeneralGame) => {
+      .then((data: GameComplete) => {
         setGame(data)
         setIsLoading(false);
         let desc = data.description

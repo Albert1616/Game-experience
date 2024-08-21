@@ -18,7 +18,7 @@ function NavMobile() {
             <DropdownMenuTrigger>
                 <Menu />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-transparent border-none flex flex-col items-end ease-in-out">
+            <DropdownMenuContent className="bg-black border-none flex flex-col items-end ease-in-out">
                 <DropdownMenuSeparator />
                 {LINKS.map((link) => {return <DropdownMenuItem key={link.nome}>
                     <Link href={link.path}>{link.nome}</Link>

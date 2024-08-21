@@ -21,6 +21,10 @@ export interface Game{
     tags:Tag[],
 }
 
+export interface GameComplete extends Game{
+    description:string
+}
+
 export interface ApiResponse{
     results:Game[];
 }
