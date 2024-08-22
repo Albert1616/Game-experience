@@ -19,7 +19,6 @@ interface PropsUrl{
 export default function GamePage({params}:PropsUrl){
     const [game, setGame] = useState<GameComplete>();
     const [loading, setLoading] = useState<boolean>(true);
-    console.log(params.id);
 
     useEffect(() => {
         fetch(`${BASE_URL}/games/${params.id}?key=${API_KEY}`)
@@ -27,6 +26,8 @@ export default function GamePage({params}:PropsUrl){
         .then((data:GameComplete) => {
             setGame(data)
             setLoading(false);
+            console.log(data)
+            console.log(data!.parent_platforms[0]!.platform.name)
         })
     }, [params.id])
 
@@ -72,18 +73,21 @@ export default function GamePage({params}:PropsUrl){
                     </div>
                     <div className="flex flex-col gap-1">
                         <h3>tags</h3>
-                        <div className="flex gap-1 items-center">
+                        <div className="flex flex-wrap gap-1 items-center">
                             {game!.tags.length > 0 ? game!.tags.map((tag) => (
                                 Tag(tag.name)
                             )) : <p className="text-xl font-bold">-</p>}
                         </div>
                     </div>
                     <div className="flex flex-col gap-1">
-                        <h3>tags</h3>
-                        <div className="flex gap-1 items-center">
-                            {game!.parent_platform.map((data) => <p>{data.platform.name}</p>)}
+                        <div className="flex flex-wrap gap-1 items-center">
+                            {game!.parent_platforms.map((data) => (
+                                <p>{data.platform.name}</p>
+                            ))}
                         </div>
                     </div>
+                    
+                    
                 </div>
             </div>
         </Container>

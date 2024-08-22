@@ -1,13 +1,13 @@
 export interface Genre{
     name:string
 }
-interface PlatformDetails{
+interface Platform{
     id:number,
     name:string,
     slug:string
 }
-interface ParentPlataform{
-    platform:PlatformDetails
+interface ParentPlatform{
+    platform:Platform;
 }
 
 interface Tag{
@@ -21,7 +21,7 @@ export interface Game{
     background_image:string,
     rating:number,
     genres:Genre[],
-    parent_platform:ParentPlataform[],
+    parent_platforms:ParentPlatform[],
     tags:Tag[],
 }
 
