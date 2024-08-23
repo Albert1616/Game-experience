@@ -8,7 +8,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react"
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
-import { Games } from "@mui/icons-material";
+import { FaAndroid, FaApple, FaPlaystation, FaWindows, FaXbox } from "react-icons/fa";
 
 interface PropsUrl{
     params:{
@@ -33,6 +33,23 @@ export default function GamePage({params}:PropsUrl){
 
     const Tag = (name:string) => {
         return <div className="py-1 px-2 bg-gray-600/40 rounded-lg">{name}</div>
+    }
+
+    const PlatformIcon = (platform:string) =>{
+        let name:string = platform.toLowerCase();
+        if(name.includes("pc")){
+            return <FaWindows size={30}/>
+        }else if(name.includes("playstation")){
+            return <FaPlaystation size={30}/>
+        }else if(name.includes("xbox")){
+            return <FaXbox size={30}/>
+        }else if(name.includes("mobile") || name.includes("android")){
+            return <FaAndroid size={30}/>
+        }else if(name.includes("apple")){
+            return <FaApple size={30}/>
+        }else{
+            return;
+        }
     }
     
     if(loading) return 
@@ -62,6 +79,11 @@ export default function GamePage({params}:PropsUrl){
                     className="lg:w-[60%] h-full"/>
                     <p className="text-xl text-balance text-justify lg:w-[40%]">{game?.description}</p>
                 </div>
+                <div className="flex flex-wrap gap-3 items-center">
+                        {game!.parent_platforms.map((data) => (
+                            PlatformIcon(data.platform.name)
+                        ))}
+                    </div>  
                 <div className="flex flex-col gap-2">
                     <div className="flex flex-col gap-1">
                         <h3>Gêneros</h3>
@@ -78,16 +100,7 @@ export default function GamePage({params}:PropsUrl){
                                 Tag(tag.name)
                             )) : <p className="text-xl font-bold">-</p>}
                         </div>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                        <div className="flex flex-wrap gap-1 items-center">
-                            {game!.parent_platforms.map((data) => (
-                                <p>{data.platform.name}</p>
-                            ))}
-                        </div>
-                    </div>
-                    
-                    
+                    </div>             
                 </div>
             </div>
         </Container>
