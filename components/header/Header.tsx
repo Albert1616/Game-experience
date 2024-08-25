@@ -2,7 +2,7 @@ import React from 'react'
 import NavMobile from './NavMobile'
 import Nav from './Nav'
 import Logo from '../Logo'
-import {FaYoutube, FaTwitter, FaSteam, FaSearch} from 'react-icons/fa';
+import Search from './Search';
 
 
 function Header() {
@@ -12,13 +12,8 @@ function Header() {
         <Logo />
         <NavMobile />
         <Nav />
-        <div className='hidden lg:flex gap-4 items-center'>
-        <div className='flex gap-4 items-center'>
-            <FaSearch size={21} className="cursor-pointer hover:scale-125 hover:text-primary transition duration-300 ease-in-out"/>
-            <FaYoutube size={21} className="cursor-pointer hover:scale-125 hover:text-primary transition duration-300 ease-in-out"/>
-            <FaTwitter size={21} className="cursor-pointer hover:scale-125 hover:text-primary transition duration-300 ease-in-out"/>
-            <FaSteam size={21} className="cursor-pointer hover:scale-125 hover:text-primary transition duration-300 ease-in-out"/>
-          </div>
+        <div className='hidden lg:flex'>
+          <Search />
         </div>
     </div>
   )
