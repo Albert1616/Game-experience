@@ -22,19 +22,21 @@ function SlideGames({...props} : PropsSlide) {
   return (
     <div className='w-full flex flex-col gap-5'>
         <h1 className='text-xl font-bold leading-tight'>
-            <Link href='/' className='flex gap-2'>{props.title + " >"}</Link>
+            <Link href='/' className='relative flex gap-2'>{props.title + " >"}</Link>
         </h1>
-        <Carousel className='h-[20em]' opts={{loop:true}}>
-            <CarouselContent className='h-full p-4'>
-                {props.games.map((game) => (
-                    <CarouselItem key={game.id} className='sm:basis-1/2 lg:basis-1/3 h-full'>
-                        <CardSlide {...game} type={props.type}/>
-                    </CarouselItem>
-                ))}
-            </CarouselContent>
-            <CarouselNext />
-            <CarouselPrevious />
-        </Carousel>
+        <div className='relative z-0'>
+            <Carousel className='h-[20em]' opts={{loop:true}}>
+                <CarouselContent className='h-full p-4'>
+                    {props.games.map((game) => (
+                        <CarouselItem key={game.id} className='sm:basis-1/2 lg:basis-1/3 h-full'>
+                            <CardSlide {...game} type={props.type}/>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselNext className='hidden md:flex'/>
+                <CarouselPrevious className='hidden md:flex'/>
+            </Carousel>
+        </div>
     </div>
   )
 }

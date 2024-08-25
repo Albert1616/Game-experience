@@ -23,10 +23,13 @@ const config = {
         background: "#0c0000"
       },
       keyframes: {
-        
+        sideBar:{
+          '0%':{opacity:'0', width: '0'},
+          '100%':{opacity:'1', width: '40%'}
+        },
       },
       animation: {
-        
+        "side-bar":"sideBar .3s linear",
       },
     },
   },

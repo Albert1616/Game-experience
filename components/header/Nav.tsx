@@ -3,12 +3,13 @@
 import { LINKS } from '@/utils/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import {FaYoutube, FaTwitter, FaSteam, FaSearch} from 'react-icons/fa';
 import React from 'react'
 
 function Nav() {
 const path = usePathname();
   return (
-    <div className='hidden md:flex'>
+    <div className='hidden lg:flex justify-between'>
         <nav className='flex items-center justify-center gap-10'>
             {LINKS.map((link) => {
                 return <Link href={link.path} key={link.nome} 
@@ -16,6 +17,7 @@ const path = usePathname();
                 font-bold hover:text-primary`}>{link.nome}</Link>
             })}
         </nav>
+        
     </div>
   )
 }
