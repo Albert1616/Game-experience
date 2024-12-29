@@ -1,14 +1,29 @@
+import Link from 'next/link';
 import React from 'react'
 import { FaSearch, FaSteam, FaTwitter, FaYoutube } from 'react-icons/fa'
+import { FaTwitch } from 'react-icons/fa6';
 
 function SocialIcons() {
+  const style = "cursor-pointer text-xl md:text-2xl hover:scale-125 text-primary transition duration-200 ease-in-out";
   return (
     <div className='flex gap-4 items-center'>
-        <FaYoutube size={21} className="cursor-pointer hover:scale-125 hover:text-primary transition duration-300 ease-in-out"/>
-        <FaTwitter size={21} className="cursor-pointer hover:scale-125 hover:text-primary transition duration-300 ease-in-out"/>
-        <FaSteam size={21} className="cursor-pointer hover:scale-125 hover:text-primary transition duration-300 ease-in-out"/>
+      <Link href='/'>
+        <FaSearch className={style} />
+      </Link>
+      <Link href='/'>
+        <FaYoutube className={style} />
+      </Link>
+      <Link href='/'>
+        <FaTwitch className={style} />
+      </Link>
+      <Link href='/'>
+        <FaTwitter className={style} />
+      </Link>
+      <Link href='/'>
+        <FaSteam className={style} />
+      </Link>
     </div>
-)
+  )
 }
 
 export default SocialIcons

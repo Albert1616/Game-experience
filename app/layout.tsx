@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header/Header";
 
-const jetBrainsMono = JetBrains_Mono({ subsets: ["latin"],
-  weight:["100", "200", "300", "400", "500","600"]
- });
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600"]
+});
 
 export const metadata: Metadata = {
   title: "Game Experience",
@@ -20,7 +20,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={jetBrainsMono.className}>
-        <Header />
         {children}
       </body>
     </html>

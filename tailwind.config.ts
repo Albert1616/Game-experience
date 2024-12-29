@@ -7,7 +7,7 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
   prefix: "",
   theme: {
     container: {
@@ -20,16 +20,16 @@ const config = {
     extend: {
       colors: {
         primary: "#712770",
-        background: "#0c0000"
+        background: "#EAEAEA"
       },
       keyframes: {
-        sideBar:{
-          '0%':{opacity:'0', width: '0'},
-          '100%':{opacity:'1', width: '40%'}
+        sideBar: {
+          '0%': { opacity: '0', width: '0' },
+          '100%': { opacity: '1', width: '40%' }
         },
       },
       animation: {
-        "side-bar":"sideBar .3s linear",
+        "side-bar": "sideBar .3s linear",
       },
     },
   },
