@@ -15,17 +15,15 @@ import { GetLatestGames, GetRatingGames } from '@/app/api/actions'
 import { CircularProgress } from '@mui/material'
 import { typesGames } from '@/utils/types'
 
-
-
 interface PropsSlide {
     title: string,
     type: typesGames
 }
 
-function SlideGames({ ...props }: PropsSlide) {
+function SlideGames({ title, type }: PropsSlide) {
     const { data: games, isLoading, isError } = useQuery({
-        queryKey: ["gamesSlider"],
-        queryFn: props.type === typesGames.LATEST ? GetLatestGames : GetRatingGames
+        queryKey: ["gamesSlider", type],
+        queryFn: type === "latest" ? GetLatestGames : GetRatingGames
     })
 
     if (isLoading || !games) return <div className='w-full h-full flex items-center justify-center'>
@@ -34,16 +32,16 @@ function SlideGames({ ...props }: PropsSlide) {
 
     if (isError) return <div className='w-full h-full flex items-center justify-center'>Errot to retriving games</div>
     return (
-        <div className='w-full flex flex-col gap-5'>
-            <h1 className='text-xl font-bold leading-tight'>
-                <Link href='/' className='relative flex gap-2'>{props.title + " >"}</Link>
+        <div className='w-full mt-8'>
+            <h1 className='text-black dark:text-white text-xl font-bold leading-tight'>
+                <Link href='/' className='relative flex gap-2'>{title + " >"}</Link>
             </h1>
-            <div className='relative z-0'>
-                <Carousel className='h-[20em]' opts={{ loop: true }}>
-                    <CarouselContent className='h-full p-4'>
+            <div className='mt-2'>
+                <Carousel className='' opts={{ loop: true }}>
+                    <CarouselContent className=''>
                         {games.map((game, index) => (
-                            index < 10 && game.background_image ? (<CarouselItem key={game.id} className='sm:basis-1/2 lg:basis-1/3 h-full'>
-                                <CardSlide {...game} type={props.type} />
+                            index < 15 && game.background_image ? (<CarouselItem key={game.id} className='sm:basis-1/2 lg:basis-1/5 h-full'>
+                                <CardSlide {...game} type={type} />
                             </CarouselItem>) : null
                         ))}
                     </CarouselContent>

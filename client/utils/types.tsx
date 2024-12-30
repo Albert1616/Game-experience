@@ -30,8 +30,8 @@ export interface GameComplete extends Game {
     description: string
 }
 export enum typesGames {
-    RATING,
-    LATEST
+    RATING = "rating",
+    LATEST = "latest"
 }
 
 export interface ApiResponse {

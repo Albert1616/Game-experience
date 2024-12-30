@@ -20,11 +20,11 @@ export const GetGames = async (req: Request, res: Response) => {
     }
 };
 
-export const GetOrderingByAdded = async (
+export const GetOrderingByReleased = async (
     req: Request, res: Response
 ) => {
     try {
-        const response = await fetch(`${process.env.BASE_URL}/games?ordering=added&key=${process.env.API_KEY}`, {
+        const response = await fetch(`${process.env.BASE_URL}/games?ordering=released&key=${process.env.API_KEY}`, {
             method: 'GET',
             headers: {
                 "Content-type": "application/json"

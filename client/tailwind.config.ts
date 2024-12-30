@@ -21,6 +21,7 @@ const config = {
       colors: {
         primary: "#712770",
         primaryDark: "#B18FCF",
+        englishViolet: "#634B66",
         background: "#EAEAEA"
       },
       keyframes: {

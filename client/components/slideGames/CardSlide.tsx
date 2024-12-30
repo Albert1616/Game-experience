@@ -17,11 +17,11 @@ function CardSlide({ type, ...props }: PropsCard) {
     }
 
     return (
-        <div className='rounded-lg w-full h-[20em] sm:h-[25em] bg-center bg-cover cursor-pointer'
+        <div className='rounded-lg w-full h-[22em] bg-center bg-cover cursor-pointer'
             style={{
                 backgroundImage: `url(${props.background_image})`,
             }} onClick={() => openDetails(props.id)}>
-            <div className='h-full w-full p-3 bg-gradient-to-b from-transparent to-black/70 flex flex-col gap-4 justify-end items-center'>
+            <div className='h-full w-full p-3 bg-gradient-to-b from-transparent to-black/60 hover:to-black/20 flex flex-col gap-4 justify-end items-center'>
                 <h1 className='text-2xl sm:text-xl text-center font-extrabold'>{props.name}</h1>
                 {type === typesGames.RATING &&
                     <div className='flex flex-col items-center gap-2'>
@@ -30,15 +30,14 @@ function CardSlide({ type, ...props }: PropsCard) {
                         <h3 className='font-extrabold'>{props.rating}/5</h3>
                     </div>
                 }
-                {type === typesGames.LATEST &&
+                {/* {type === typesGames.LATEST &&
                     <ul className='flex flex-wrap gap-2'>
                         {props.tags!.map((tag, index) => (
                             index <= 5 && <li key={tag.id}
                                 className='text-sm rounded-lg bg-gray-400 text-black py-[2px] px-1'>{tag.name}</li>
                         ))}
                     </ul>
-                }
-
+                } */}
             </div>
         </div>
     )

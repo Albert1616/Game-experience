@@ -36,7 +36,7 @@ export const GamesYear = () => {
   if (isLoading) return <div className="container flex flex-col items-center justify-center"><CircularProgress /></div>
   if (isError) return <p>Error to retriving games</p>;
   return (
-    <div className='mt-28 h-[30em] w-full grid grid-cols-6 gap-2'>
+    <div className='mt-28 h-full w-full grid grid-cols-6 gap-2'>
       <GeneralGame game={gameGeneral!} />
       <div className='h-full flex flex-col gap-3 text-center col-span-1'>
         {games && games.map((game, index) => (
