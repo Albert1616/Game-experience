@@ -7,6 +7,13 @@ import { CircularProgress } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { GetGames } from '@/app/api/actions';
 import { Game } from '@/utils/types';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 export const GamesYear = () => {
   const { data: games, isLoading, isError } = useQuery({
@@ -36,15 +43,29 @@ export const GamesYear = () => {
   if (isLoading) return <div className="container flex flex-col items-center justify-center"><CircularProgress /></div>
   if (isError) return <p>Error to retriving games</p>;
   return (
-    <div className='mt-28 h-full w-full grid grid-cols-6 gap-2'>
-      <GeneralGame game={gameGeneral!} />
-      <div className='h-full flex flex-col gap-3 text-center col-span-1'>
-        {games && games.map((game, index) => (
-          index < 5 ? (
-            <GameCard {...game} isSelected={gameGeneral!.id === game.id ? true : false} key={game.id}
-              onChange={changeGeneral} />
-          ) : null
-        ))}
+    <div>
+      <div className='mt-28 h-full'>
+        <Carousel>
+          <CarouselContent className='h-full'>
+            {games?.map((game) => (
+              <CarouselItem key={game.id}>
+                <GeneralGame game={game} />
+              </CarouselItem>))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </div>
+      <div className='mt-28 h-full w-full hidden md:grid grid-cols-6 gap-2'>
+        <GeneralGame game={gameGeneral!} />
+        <div className='h-full flex flex-col gap-3 text-center col-span-1'>
+          {games && games.map((game, index) => (
+            index < 5 ? (
+              <GameCard {...game} isSelected={gameGeneral!.id === game.id ? true : false} key={game.id}
+                onChange={changeGeneral} />
+            ) : null
+          ))}
+        </div>
       </div>
     </div>
   )

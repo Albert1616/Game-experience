@@ -3,10 +3,8 @@ import NavMobile from './NavMobile'
 import Nav from './Nav'
 import Logo from '../Logo'
 import SocialIcons from './SocialIcons';
-import { Button } from '../ui/button';
 import { useAppDispatch, useAppSelector } from '@/lib/store';
 import { setIsDarkMode } from '@/lib/features/globalSlicer';
-import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
 import { Moon, Sun } from 'lucide-react';
 
 function Header() {
