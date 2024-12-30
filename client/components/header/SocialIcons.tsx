@@ -4,7 +4,7 @@ import { FaSearch, FaSteam, FaTwitter, FaYoutube } from 'react-icons/fa'
 import { FaTwitch } from 'react-icons/fa6';
 
 function SocialIcons() {
-  const style = "cursor-pointer text-xl md:text-2xl hover:scale-125 text-primary transition duration-200 ease-in-out";
+  const style = "cursor-pointer text-xl md:text-2xl hover:scale-125 text-primary dark:text-primaryDark transition duration-200 ease-in-out";
   return (
     <div className='flex gap-4 items-center'>
       <Link href='/'>

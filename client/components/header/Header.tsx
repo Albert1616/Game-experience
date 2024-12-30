@@ -30,7 +30,7 @@ function Header() {
       <div className='hidden lg:flex items-center gap-5'>
         <SocialIcons />
         <button onClick={() => handleViewMode()} className='text-lg md:text-xl bg-transparent 
-        border-none text-black dark:text-white hover:text-primary dark:hover:text-primary'>
+        border-none text-black dark:text-white hover:text-primary dark:hover:text-primaryDark'>
           {isDarkMode ? (
             <Sun />
           ) : (

@@ -13,8 +13,8 @@ function Nav() {
       <nav className='flex items-center justify-center gap-10'>
         {LINKS.map((link) => {
           return <Link href={link.path} key={link.nome}
-            className={`${link.path === path && "text-primary border-b-2 border-primary"} 
-                font-bold text-black dark:text-white hover:text-primary`}>{link.nome}</Link>
+            className={`${link.path === path && "text-primary dark:text-primaryDark border-b-2 border-primary dark:border-primaryDark"} 
+                font-bold text-black dark:text-white hover:text-primary dark:hover:text-primaryDark`}>{link.nome}</Link>
         })}
       </nav>
 

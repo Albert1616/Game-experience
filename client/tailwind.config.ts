@@ -20,6 +20,7 @@ const config = {
     extend: {
       colors: {
         primary: "#712770",
+        primaryDark: "#B18FCF",
         background: "#EAEAEA"
       },
       keyframes: {
