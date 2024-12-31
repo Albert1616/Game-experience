@@ -47,3 +47,19 @@ export const GetRatingGames = async () => {
         throw new Error(`${error}`)
     }
 }
+
+export const GetGamesByGenre = async (genre: string) => {
+    try {
+        const response = await fetch(`http://localhost:8000/games/genre?genre=${genre}`);
+
+        if (!response.ok) {
+            throw new Error("Error in response server")
+        }
+
+        const data = await response.json();
+        const games: Game[] = data.results;
+        return games;
+    } catch (error) {
+        throw new Error(`${error}`)
+    }
+}

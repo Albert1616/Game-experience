@@ -44,7 +44,7 @@ export const GamesYear = () => {
   if (isError) return <p>Error to retriving games</p>;
   return (
     <div>
-      <div className='mt-28 h-full'>
+      <div className='mt-28 h-full md:hidden'>
         <Carousel>
           <CarouselContent className='h-full'>
             {games?.map((game) => (

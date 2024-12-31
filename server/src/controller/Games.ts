@@ -10,13 +10,13 @@ export const GetGames = async (req: Request, res: Response) => {
         });
 
         if (!response.ok) {
-            res.status(500).send({ message: "Response error" }); // Use return para evitar múltiplas respostas
+            res.status(500).json({ message: "Response error" }); // Use return para evitar múltiplas respostas
         }
 
         const data = await response.json();
-        res.status(200).send(data); // Use return para garantir que a execução pare aqui
+        res.status(200).json(data); // Use return para garantir que a execução pare aqui
     } catch (error) {
-        res.status(500).send({ message: `Error retrieving games: ${error}` }); // Garantir que a resposta seja enviada e a função pare
+        res.status(500).json({ message: `Error retrieving games: ${error}` }); // Garantir que a resposta seja enviada e a função pare
     }
 };
 
@@ -32,13 +32,13 @@ export const GetOrderingByReleased = async (
         });
 
         if (!response.ok) {
-            res.status(500).send({ message: "Response error" }); // Use return para evitar múltiplas respostas
+            res.status(500).json({ message: "Response error" }); // Use return para evitar múltiplas respostas
         }
 
         const data = await response.json();
-        res.status(200).send(data); // Use return para garantir que a execução pare aqui
+        res.status(200).json(data); // Use return para garantir que a execução pare aqui
     } catch (error) {
-        res.status(500).send({ message: `Error retrieving games: ${error}` }); // Garantir que a resposta seja enviada e a função pare
+        res.status(500).json({ message: `Error retrieving games: ${error}` }); // Garantir que a resposta seja enviada e a função pare
     }
 };
 
@@ -55,13 +55,13 @@ export const GetOrderingByRating = async (
         });
 
         if (!response.ok) {
-            res.status(500).send({ message: "Response error" }); // Use return para evitar múltiplas respostas
+            res.status(500).json({ message: "Response error" }); // Use return para evitar múltiplas respostas
         }
 
         const data = await response.json();
-        res.status(200).send(data); // Use return para garantir que a execução pare aqui
+        res.status(200).json(data); // Use return para garantir que a execução pare aqui
     } catch (error) {
-        res.status(500).send({ message: `Error retrieving games: ${error}` }); // Garantir que a resposta seja enviada e a função pare
+        res.status(500).json({ message: `Error retrieving games: ${error}` }); // Garantir que a resposta seja enviada e a função pare
     }
 };
 
@@ -78,12 +78,33 @@ export const SearchGames = async (
         });
 
         if (!response.ok) {
-            res.status(500).send({ message: "Response error" }); // Use return para evitar múltiplas respostas
+            res.status(500).json({ message: "Response error" }); // Use return para evitar múltiplas respostas
         }
 
         const data = await response.json();
-        res.status(200).send(data); // Use return para garantir que a execução pare aqui
+        res.status(200).json(data); // Use return para garantir que a execução pare aqui
     } catch (error) {
-        res.status(500).send({ message: `Error retrieving games: ${error}` }); // Garantir que a resposta seja enviada e a função pare
+        res.status(500).json({ message: `Error retrieving games: ${error}` }); // Garantir que a resposta seja enviada e a função pare
     }
 };
+
+export const GetGamesByGenre = async (req: Request, res: Response) => {
+    try {
+        const { genre } = req.query;
+        const response = await fetch(`${process.env.BASE_URL}/games?genres=${genre}&key=${process.env.API_KEY}`, {
+            method: 'GET',
+            headers: {
+                "Content-type": "application/json"
+            },
+        });
+
+        if (!response.ok) {
+            res.status(500).json({ message: "Response error" });
+        }
+
+        const data = await response.json();
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({ message: `Error retrieving games: ${error}` });
+    }
+}

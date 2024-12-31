@@ -21,6 +21,8 @@ const config = {
       colors: {
         primary: "#712770",
         primaryDark: "#B18FCF",
+        primaryWhite: "#FCFCFF",
+        primaryGray: "#30323D",
         englishViolet: "#634B66",
         background: "#EAEAEA"
       },

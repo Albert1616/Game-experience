@@ -17,7 +17,7 @@ function GeneralGame({ game }: props) {
         animate={{ x: 0, opacity: 1 }}
         transition={{ ease: "easeInOut", duration: 0.5, delay: 0.1 }}
         className='rounded-xl
-      col-span-5 max-w-full cursor-pointer h-[25em] md:max-h-full  relative'>
+      col-span-5 max-w-full cursor-pointer h-[25em] md:h-[30em] md:max-h-full  relative'>
         <Image
           src={game.background_image}
           alt="Game banner"

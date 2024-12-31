@@ -8,6 +8,8 @@ import DashBoardWrapper from "@/components/DashBoardWrapper";
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from "./queryClient";
 import { typesGames } from "@/utils/types";
+import RandomGame from "@/components/RandomGame/RandomGame";
+import RandomGameSection from "@/components/RandomGame/RandomGameSection";
 
 export default function Home() {
   return (
@@ -19,6 +21,7 @@ export default function Home() {
             <GamesYear />
             <SlideGames title="Lançamentos" type={typesGames.LATEST} />
             <SlideGames title="Favoritos dos gamers" type={typesGames.RATING} />
+            <RandomGameSection />
           </div>
         </DashBoardWrapper>
       </QueryClientProvider>
