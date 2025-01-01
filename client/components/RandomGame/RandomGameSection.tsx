@@ -16,13 +16,13 @@ const RandomGameSection = () => {
         }
     }
     return (
-        <div className='w-full h-[30em] grid grid-cols-1 md:grid-cols-6 gap-4 pt-10 px-4 bg-primaryWhite dark:bg-primaryGray'>
+        <div className='w-full md:h-[30em] grid grid-cols-1 md:grid-cols-6 gap-4 pt-10 px-4 bg-primaryWhite dark:bg-primaryGray'>
             <div className='flex flex-col md:items-center md:justify-center col-span-3'>
                 <div className='flex flex-col items-center'>
-                    <p className="text-black dark:text-white text-[15px] md:text-xl font-medium text-center w-fit leading-tight">Interressado em novas experiências?</p>
+                    <p className="text-black dark:text-white text-[16px] md:text-xl font-medium text-center w-fit leading-tight">Interressado em novas experiências?</p>
                     <h2 className='text-black dark:text-white text-xl md:text-4xl font-extrabold text-center w-fit leading-tight'> Vamos achar um novo game para você!</h2>
                 </div>
-                <div>
+                <div className='mt-8'>
                     <p className='text-black dark:text-white text-sm md:text-lg text-center font-medium w-fit leading-tight'>Selecione o gênero que você mais gosta e nos vamos encontrar um game fantástico 😉</p>
                     <div className='mt-4 flex items-center justify-center gap-2'>
                         <select
@@ -30,7 +30,7 @@ const RandomGameSection = () => {
                             value={genre}
                             onChange={handleChangeGenre}
                             disabled={active}
-                            className='bg-[#424B54] rounded-lg md:p-1 text-lg'>
+                            className='bg-[#424B54] rounded-lg p-0 h-[1.7em] text-[15px] md:p-1 md:text-lg'>
                             <option value="action">Ação</option>
                             <option value="indie">Indie</option>
                             <option value="adventure">Aventura</option>
@@ -56,7 +56,7 @@ const RandomGameSection = () => {
                             }
                         }}
                             disabled={active}
-                            className='font-extrabold bg-primaryDark h-[2em] md:p-4 md:text-lg'>
+                            className='font-extrabold bg-primaryDark h-[2em] p-1 md:p-4 md:text-lg'>
                             Novo game ✨
                         </Button>
                         <Button onClick={() => setActive(false)} className={`${active ? 'flex h-[2em] md:p-4 md:text-lg bordernone shadow-none bg-transparent hover:bg-transparent text-primary dark:text-primaryDark' : 'hidden'}`}>
@@ -65,17 +65,17 @@ const RandomGameSection = () => {
                     </div>
                 </div>
             </div>
-            <div className='col-span-3 h-[25em]'>
+            <div className='col-span-3 h-full'>
                 {active ? (
                     <RandomGame genre={genre} />
                 ) : (
                     <Image
                         alt='Imagem de animada, escrito "seu game aqui"'
                         src="/gameCard.jpeg"
-                        height={300}
-                        width={300}
+                        height={200}
+                        width={200}
                         quality={100}
-                        className='rounded-2xl w-full h-full' />
+                        className='rounded-2xl w-full md:h-full' />
                 )}
             </div>
         </div>
