@@ -14,11 +14,23 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
-  name     String
-  email    String  @unique
-  password String
-  isVerify Boolean @default(false)
+  id           String             @id @default(uuid())
+  name         String
+  email        String             @unique
+  password     String
+  isVerify     Boolean            @default(false)
+  refreshToken UserRefreshToken[]
+}
+
+model UserRefreshToken {
+  id          String   @id @default(uuid())
+  userId      String
+  token       String
+  blackedList Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  expiration  Int
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model EmailVerify {

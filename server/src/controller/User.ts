@@ -2,8 +2,20 @@ import { PrismaClient } from "@prisma/client"
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 import { SendEmailVerificationOTP } from "../../utils/SendEmailVerificationOTP";
+import { generateToken } from "../../utils/GenerateToken";
+import jwt from "jsonwebtoken"
+import { SetCookies } from "../../utils/SetCookies";
 
 const prisma = new PrismaClient();
+
+export const GetUsers = async (req: Request, res: Response) => {
+    try {
+        const users = await prisma.user.findMany();
+        res.status(200).json({ users: users })
+    } catch (error) {
+        res.status(500).json({ message: "Erro to return an list of the users" })
+    }
+}
 
 export const Register = async (req: Request, res: Response) => {
     try {
@@ -153,6 +165,30 @@ export const Login = async (req: Request, res: Response) => {
             res.status(400).json({ message: "Account not verify" })
             return;
         }
+
+        const { acessToken, refreshToken,
+            acessTokenExpiration, refreshTokenExpiration } =
+            await generateToken(existsUser);
+
+        SetCookies({ res, acessToken, refreshToken, acessTokenExpiration, refreshTokenExpiration });
+
+        res.status(200).json({
+            status: "Sucess",
+            message: "Login sucessful",
+            acessToken: acessToken,
+            refreshToken: refreshToken,
+            acessTokenExpiration: acessTokenExpiration,
+            refreshTokenExpiration: refreshTokenExpiration,
+            isAuth: true
+        })
+
+    } catch (error) {
+        res.status(500).json({ message: `Authentication failed. ${error}` })
+    }
+}
+
+export const GetNewAcessToken = async (req: Request, res: Response) => {
+    try {
 
     } catch (error) {
 

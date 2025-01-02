@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors';
 import passport from 'passport'
+import cookieParser from 'cookie-parser';
 
 //Routes
 import GamesRoutes from './routes/Games'
@@ -10,6 +11,7 @@ import UserRoutes from './routes/User'
 const app = express();
 app.use(express.json());
 app.use(passport.initialize())
+app.use(cookieParser())
 
 //USE .ENV
 dotenv.config();
