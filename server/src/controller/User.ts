@@ -3,8 +3,8 @@ import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 import { SendEmailVerificationOTP } from "../../utils/SendEmailVerificationOTP";
 import { generateToken } from "../../utils/GenerateToken";
-import jwt from "jsonwebtoken"
 import { SetCookies } from "../../utils/SetCookies";
+import { RefreshAcessToken } from "../../utils/RefreshAcessToken";
 
 const prisma = new PrismaClient();
 
@@ -114,7 +114,7 @@ export const VerifyEmail = async (req: Request, res: Response) => {
             return;
         }
 
-        const updateUser = await prisma.user.update({
+        await prisma.user.update({
             where: {
                 id: existsUser.id
             },
@@ -189,8 +189,107 @@ export const Login = async (req: Request, res: Response) => {
 
 export const GetNewAcessToken = async (req: Request, res: Response) => {
     try {
+        const data = await RefreshAcessToken(req, res);
 
+        if (!data) {
+            res.status(500).json({ message: "Error to response" })
+            return;
+        }
+
+        const {
+            newAcessToken, newRefreshToken,
+            newAcessTokenExpiration, newRefreshTokenExpiration
+        } = data;
+
+        SetCookies({
+            res, acessToken: newAcessToken,
+            refreshToken: newRefreshToken,
+            acessTokenExpiration: newAcessTokenExpiration,
+            refreshTokenExpiration: newRefreshTokenExpiration
+        });
+
+        res.status(200).json({
+            status: "Sucess",
+            message: "Generate new tokens",
+            acessToken: newAcessToken,
+            refreshToken: newRefreshToken,
+            acessTokenExpiration: newAcessTokenExpiration,
+            refreshTokenExpiration: newRefreshTokenExpiration,
+            isAuth: true
+        })
     } catch (error) {
+        res.status(500).json({ message: "Error to generate new tokens" });
+        return;
+    }
+}
 
+export const userProfile = async (req: Request, res: Response) => {
+    res.send(req.user);
+}
+
+export const Logout = async (req: Request, res: Response) => {
+    try {
+        const acessToken = req.cookies.AcessToken
+
+        if (!acessToken) {
+            res.status(400).json({ message: "User not logged in" });
+            return;
+        }
+
+        res.clearCookie("AcessToken");
+        res.clearCookie("RefreshToken");
+        res.status(200).json({ message: "Logout sucessful" })
+    } catch (error) {
+        res.status(500).json({ message: "Logout failed" })
+    }
+}
+
+export const ChangePassword = async (req: Request, res: Response) => {
+    try {
+
+        const { password, confirmPassword }:
+            { password: string, confirmPassword: string } = req.body;
+
+        if (!password || !confirmPassword) {
+            res.status(400).json({ message: "Password and confirm password is required" })
+            return;
+        }
+
+        if (password != confirmPassword) {
+            res.status(400).json({ message: "Password and confirm password don't match" })
+            return;
+        }
+
+        if (!req.user) {
+            res.status(400).json({ message: "User not logged in" });
+            return;
+        }
+
+        const user = await prisma.user.findFirst({
+            where: {
+                id: req.user.id
+            }
+        })
+
+        if (!user) {
+            res.status(404).json({ message: "User not found" });
+            return;
+        }
+
+        const salt = await bcrypt.genSalt(Number(process.env.SALT!))
+        const hashPassword = bcrypt.hashSync(password, salt);
+
+        await prisma.user.update({
+            where: {
+                id: user.id
+            },
+            data: {
+                password: hashPassword
+            }
+        })
+
+        res.status(200).json({ message: "User password changed" })
+    } catch (error) {
+        res.status(500).json({ message: `Error to change user password.${error} ` })
     }
 }

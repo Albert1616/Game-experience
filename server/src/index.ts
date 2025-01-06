@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import cors from 'cors';
 import passport from 'passport'
 import cookieParser from 'cookie-parser';
+import "../config/PassportJwtConfig"
 
 //Routes
 import GamesRoutes from './routes/Games'
@@ -18,7 +19,7 @@ dotenv.config();
 
 //USE CORS
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: process.env.FRONT_END,
     optionsSuccessStatus: 200,
 }
 app.use(cors(corsOptions));
