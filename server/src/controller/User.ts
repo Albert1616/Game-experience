@@ -5,8 +5,36 @@ import { SendEmailVerificationOTP } from "../../utils/SendEmailVerificationOTP";
 import { generateToken } from "../../utils/GenerateToken";
 import { SetCookies } from "../../utils/SetCookies";
 import { RefreshAcessToken } from "../../utils/RefreshAcessToken";
+import { SendPasswordResetLinkEmail } from '../../utils/SendEmailPasswordReset'
+import jwt from 'jsonwebtoken'
 
 const prisma = new PrismaClient();
+
+export const GetUserById = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+
+        if (!id) {
+            res.status(400).json({ message: "Id field is required" });
+            return;
+        }
+
+        const user = await prisma.user.findFirst({
+            where: {
+                id: id
+            }
+        })
+
+        if (!user) {
+            res.status(404).json({ message: "User not found" });
+            return;
+        }
+
+        res.status(200).json({ user })
+    } catch (error) {
+        res.status(500).json({ message: `Error to retriving user. ${error}` })
+    }
+}
 
 export const GetUsers = async (req: Request, res: Response) => {
     try {
@@ -291,5 +319,84 @@ export const ChangePassword = async (req: Request, res: Response) => {
         res.status(200).json({ message: "User password changed" })
     } catch (error) {
         res.status(500).json({ message: `Error to change user password.${error} ` })
+    }
+}
+
+export const SendPasswordResetLink = async (req: Request, res: Response) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            res.status(400).json({ message: "Email is required" });
+            return;
+        }
+
+        const user = await prisma.user.findFirst({
+            where: {
+                email: email
+            }
+        })
+
+        if (!user) {
+            res.status(404).json({ message: "Not found user with this email" });
+            return;
+        }
+
+        await SendPasswordResetLinkEmail(user);
+
+        res.status(200).json({
+            status: "Sucess",
+            message: "Link send with sucess! verify your email."
+        })
+
+    } catch (error) {
+        res.status(500).json({ message: "Error to send link to reset password via email" })
+    }
+}
+
+export const UserPasswordReset = async (req: Request, res: Response) => {
+    try {
+        const { password, confirm_password } = req.body;
+        const { userId, token } = req.params;
+
+        const user = await prisma.user.findFirst({
+            where: {
+                id: userId
+            }
+        })
+
+        if (!user) {
+            res.status(404).json({ message: "User not found" });
+            return;
+        }
+
+        const new_secret = user.id + process.env.JWT_SECRET_KEY;
+        const tokenCompare = jwt.verify(token, new_secret);
+
+        if (!password || !confirm_password) {
+            res.status(400).json({ message: "password and confirm password fild is required" });
+            return;
+        }
+
+        if (password != confirm_password) {
+            res.status(400).json({ message: "Password and confirm password don't match" });
+            return;
+        }
+
+        const salt = Number(process.env.SALT);
+        const hashedPassword = bcrypt.hashSync(password, salt);
+
+        await prisma.user.update({
+            where: {
+                id: user.id
+            },
+            data: {
+                password: hashedPassword
+            }
+        })
+
+        res.status(200).json({ message: "Password changed with sucess" })
+    } catch (error) {
+        res.status(500).json({ message: `Error to change password. ${error}` })
     }
 }

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { TokenIsExpired } from './TokenIsExpired';
+import { TokenIsExpired } from '../../utils/TokenIsExpired';
 
 export const SetHeaderBaeren = async (
     req: Request, res: Response,
