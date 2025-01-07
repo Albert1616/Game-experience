@@ -52,18 +52,18 @@ export const Register = async (req: Request, res: Response) => {
             { name: string, email: string, password: string, confirm_password: string } = req.body;
 
         //CONDITIONS
-        if (!email || !password || !confirm_password) {
+        if (!name || !email || !password || !confirm_password) {
             res.status(400).json({ message: "Invalid inputs" });
             return;
         }
 
         if (password.length < 8) {
-            res.status(400).json({ message: "Password must be at least 8 characters" });
+            res.status(400).json({ message: "A senha deve ter mais de 8 caracteres" });
             return;
         }
 
         if (password !== confirm_password) {
-            res.status(400).json({ message: "Passwords must be the same" })
+            res.status(400).json({ message: "As senhas devem ser iguais" })
             return;
         }
 
@@ -74,7 +74,7 @@ export const Register = async (req: Request, res: Response) => {
         })
 
         if (existUser) {
-            res.status(409).json({ message: "There is already account with this email" })
+            res.status(409).json({ message: "Já existe uma conta vinculada a este email." })
             return;
         }
 
@@ -96,7 +96,7 @@ export const Register = async (req: Request, res: Response) => {
             res.status(201).json({ message: response, otp: otp })
         }
     } catch (error) {
-        res.status(500).json({ message: `Error in register user: ${error}` });
+        res.status(500).json({ message: `Erro ao criar usuário: ${error}` });
     }
 }
 

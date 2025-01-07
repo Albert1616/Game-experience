@@ -8,8 +8,8 @@ import DashBoardWrapper from "@/components/DashBoardWrapper";
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from "./queryClient";
 import { typesGames } from "@/utils/types";
-import RandomGame from "@/components/RandomGame/RandomGame";
 import RandomGameSection from "@/components/RandomGame/RandomGameSection";
+import { Toaster } from "sonner";
 
 export default function Home() {
   return (
