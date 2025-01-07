@@ -1,7 +1,7 @@
 import React from 'react'
 import { Input } from '../ui/input'
 import { UseFormRegister } from 'react-hook-form'
-import { UserType } from '@/utils/formTypesZod'
+import { UserCredentialsType, UserType } from '@/utils/formTypesZod'
 
 type TypeName = "name" | "email" | "password" | "confirm_password";
 

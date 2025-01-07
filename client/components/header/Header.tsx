@@ -4,6 +4,8 @@ import Nav from './Nav'
 import Logo from '../Logo'
 import SocialIcons from './SocialIcons';
 import ButtonSetMode from '../ButtonSetMode';
+import { FaUserCircle } from "react-icons/fa";
+import UserLoginModal from './UserLoginModal';
 
 function Header() {
 
@@ -15,7 +17,10 @@ function Header() {
       <Nav />
       <div className='hidden lg:flex items-center gap-5'>
         <SocialIcons />
-        <ButtonSetMode className='text-black dark:text-white hover:text-primary dark:hover:text-primaryDark' />
+        <div className='ml-10 flex items-center gap-2'>
+          <ButtonSetMode className='text-black dark:text-white hover:text-primary dark:hover:text-primaryDark' />
+          <UserLoginModal />
+        </div>
       </div>
     </div>
   )

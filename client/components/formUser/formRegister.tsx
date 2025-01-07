@@ -19,8 +19,8 @@ const FormRegister = () => {
     const router = useRouter();
     const handleCreateUser = async (data: UserType) => {
         try {
-            toast.success("Conta criada com sucesso! Um link de confirmação foi enviado para o seu email. Por favor acesse e confirme sua conta.")
             const response = await RegisterUser(data);
+            toast.success("Conta criada com sucesso! Um link de confirmação foi enviado para o seu email. Por favor acesse e confirme sua conta.")
             router.push("/");
         } catch (error: any) {
             toast.error(`${error.message}`)
@@ -49,7 +49,7 @@ const FormRegister = () => {
                         {errors.confirm_password && <p className='text-red-500 text-xs'>{errors.confirm_password.message}</p>}
                     </div>
 
-                    <Button type='submit'>Criar conta</Button>
+                    <Button type='submit' className='w-1/2'>Criar conta</Button>
                 </form>
             </div>
         </div>

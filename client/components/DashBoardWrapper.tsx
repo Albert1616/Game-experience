@@ -8,7 +8,7 @@ type Props = {
 
 const DashBoardWrapper = ({ children }: Props) => {
     return (
-        <div className="flex flex-col min-h-screen container mx-auto px-12 md:px-0">
+        <div className="flex flex-col min-h-screen container mx-auto">
             {children}
         </div>
     )
