@@ -1,5 +1,6 @@
-import { UserType } from "@/utils/formTypesZod";
-import { Game } from "@/utils/types";
+import { UserCredentialsType, UserType } from "@/utils/formTypesZod";
+import { Game, Session } from "@/utils/types";
+import { cookies } from "next/headers";
 
 const api_url = "http://localhost:8000";
 
@@ -88,6 +89,43 @@ export const RegisterUser = async (user: UserType) => {
         }
 
         const data = await response.json();
+        return data;
+    } catch (error) {
+        throw new Error(`${error}`)
+    }
+}
+
+export const Login = async (credentials: UserCredentialsType) =>{
+    'use server'
+
+    try {
+        const response = await fetch(`${api_url}/user/login`,{
+            method:"POST",
+            headers:{
+                "Content-type" : "Application/json"
+            },
+            body:JSON.stringify({
+                email: credentials.email,
+                password: credentials.password
+            }),
+            credentials: "include"
+        })
+
+        if (!response.ok){
+            const data = await response.json();
+            throw new Error(data.message)
+        }
+
+        const data:Session = await response.json();
+        
+        cookies().set("acessToken", data.acessToken, {
+            httpOnly:true,
+            maxAge: data.cessTokenExpiration
+        }).set("refreshToken", data.refreshToken, {
+            httpOnly:true,
+            maxAge: data.cessTokenExpiration
+        })
+
         return data;
     } catch (error) {
         throw new Error(`${error}`)

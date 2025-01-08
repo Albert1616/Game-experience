@@ -19,7 +19,7 @@ const FormRegister = () => {
     const router = useRouter();
     const handleCreateUser = async (data: UserType) => {
         try {
-            const response = await RegisterUser(data);
+            await RegisterUser(data);
             toast.success("Conta criada com sucesso! Um link de confirmação foi enviado para o seu email. Por favor acesse e confirme sua conta.")
             router.push("/");
         } catch (error: any) {

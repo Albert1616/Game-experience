@@ -11,7 +11,7 @@ export type UserType = z.infer<typeof User>
 
 export const UserCredentials = z.object({
     email:z.string().email({message:"Email com formato inválido"}).nonempty({message:"Informe o seu email"}),
-    password: z.string().nonempty({message:"Informe a sua senha"})
+    password: z.string().nonempty({message:"Informe a sua senha"}).min(8, {message:"A senha deve ter no minimo 8 caracteres"})
 })
 
 export type UserCredentialsType = z.infer<typeof UserCredentials>
