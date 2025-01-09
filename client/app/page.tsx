@@ -17,7 +17,7 @@ export default function Home() {
       <QueryClientProvider client={queryClient}>
         <DashBoardWrapper>
           <Header />
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 px-10">
             <GamesYear />
             <SlideGames title="Lançamentos" type={typesGames.LATEST} />
             <SlideGames title="Favoritos dos gamers" type={typesGames.RATING} />

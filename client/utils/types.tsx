@@ -38,9 +38,9 @@ export interface ApiResponse {
     results: Game[];
 }
 
-export interface Session{
+export interface Session {
     acessToken: string,
     refreshToken: string,
-    cessTokenExpiration:number, 
-    refreshTokenExpiration:number
+    acessTokenExpiration: number,
+    refreshTokenExpiration: number
 }
