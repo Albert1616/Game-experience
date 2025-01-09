@@ -1,12 +1,15 @@
 import globalSlicer from "@/lib/features/globalSlicer";
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import {userApi} from '@/services/user'
 
 export const makeStore = () => {
     return configureStore({
         reducer: {
-            global: globalSlicer
+            global: globalSlicer,
+            [userApi.reducerPath]: userApi.reducer
         },
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userApi.middleware)
     });
 };
 

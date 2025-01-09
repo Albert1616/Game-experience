@@ -190,7 +190,8 @@ export const Login = async (req: Request, res: Response) => {
         }
 
         if (!existsUser.isVerify) {
-            res.status(400).json({ message: "Account not verify" })
+            SendEmailVerificationOTP(existsUser)
+            res.status(400).json({ message: "A conta ainda não foi verificada. Um novo de link de verificação foi enviado para o seu email." })
             return;
         }
 

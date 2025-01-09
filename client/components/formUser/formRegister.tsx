@@ -6,22 +6,27 @@ import { useForm } from 'react-hook-form'
 import { User, UserType } from '@/utils/formTypesZod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '../ui/button'
-import { RegisterUser } from '@/app/api/actions'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { error } from 'console'
+import { useRegisterUserMutation } from '@/services/user'
+import { SetCookies } from '@/app/api/cookies'
 
 const FormRegister = () => {
     const { handleSubmit, register, reset, formState: { errors } } = useForm<UserType>({
         resolver: zodResolver(User),
     })
-
+    const [registerUser, {isLoading, isError, error}] = useRegisterUserMutation();
+    
     const router = useRouter();
     const handleCreateUser = async (data: UserType) => {
         try {
-            await RegisterUser(data);
-            toast.success("Conta criada com sucesso! Um link de confirmação foi enviado para o seu email. Por favor acesse e confirme sua conta.")
-            router.push("/");
+            registerUser(data);
+            if (isError){
+                toast.error(`${error}`)
+            }else{
+                router.push("/");
+            }
+
         } catch (error: any) {
             toast.error(`${error.message}`)
         }

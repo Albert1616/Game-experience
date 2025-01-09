@@ -44,3 +44,10 @@ export interface Session {
     acessTokenExpiration: number,
     refreshTokenExpiration: number
 }
+
+export interface User{
+    id:string,
+    name:string,
+    email:string,
+    password:string
+}
