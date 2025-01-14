@@ -16,7 +16,7 @@ export const userApi = createApi({
             }),
             invalidatesTags: ['Register']
         }),
-        verifyEmail: builder.mutation<String, {code:string}>({
+        verifyEmail: builder.mutation<String, {email:String, code:number}>({
             query: (body) => ({
                 url:'/user/verifyEmail',
                 method: 'POST',

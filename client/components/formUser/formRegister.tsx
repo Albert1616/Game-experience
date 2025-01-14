@@ -9,7 +9,6 @@ import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { useRegisterUserMutation } from '@/services/user'
-import { SetCookies } from '@/app/api/cookies'
 
 const FormRegister = () => {
     const { handleSubmit, register, reset, formState: { errors } } = useForm<UserType>({
