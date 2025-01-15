@@ -23,9 +23,8 @@ const FormRegister = () => {
             if (isError){
                 toast.error(`${error}`)
             }else{
-                router.push("/");
+                router.push(`/account/verifyEmail/${data.email}`);
             }
-
         } catch (error: any) {
             toast.error(`${error.message}`)
         }

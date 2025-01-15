@@ -8,9 +8,24 @@ import UserLoginModal from './UserLoginModal';
 import Cookie from 'js-cookie';
 import UserProfile from './UserProfile';
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { User } from 'lucide-react';
+import Link from 'next/link';
+
+
 function Header() {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const session = Cookie.get("acessToken");
+
+  const handleClose = () => setDropdownOpen(!dropdownOpen);
 
   useEffect(() => {
     if (session) setIsAuth(true);
@@ -25,7 +40,19 @@ function Header() {
         <SocialIcons />
         <div className='ml-10 flex items-center gap-2'>
           <ButtonSetMode className='text-black dark:text-white hover:text-primary dark:hover:text-primaryDark' />
-          {isAuth ? <UserProfile />: <UserLoginModal />}
+          <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+            <DropdownMenuTrigger><User size={30} className='text-black dark:text-white'/></DropdownMenuTrigger>
+            <DropdownMenuContent className='bg-primaryWhite text-black flex flex-col items-center'>
+              <DropdownMenuItem onClick={handleClose}>
+                <UserLoginModal />
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleClose}>
+                <Link href="/account/signup">Criar conta</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* {isAuth ? <UserProfile />: <UserLoginModal />} */}
         </div>
       </div>
     </div>
