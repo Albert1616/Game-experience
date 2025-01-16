@@ -11,15 +11,16 @@ export const userApi = createApi({
             query: (body) => ({
                 url: 'user/register',
                 method: 'POST',
-                headers: {'Content-type':'Application/type'},
+                headers: {'Content-type':'application/json'},
                 body
             }),
             invalidatesTags: ['Register']
         }),
-        verifyEmail: builder.mutation<String, {email:String, code:number}>({
+        verifyEmail: builder.mutation<String, {email:String, otp:number}>({
             query: (body) => ({
                 url:'/user/verifyEmail',
                 method: 'POST',
+                headers: {'Content-type':'application/json'},
                 body
             }),
             invalidatesTags: ['Verify_email']

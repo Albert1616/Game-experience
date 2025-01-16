@@ -8,7 +8,7 @@ export const SendEmailVerificationOTP = async (user: User) => {
     const code = Math.floor(1000 + Math.random() * 9000);
 
     // Link to front end
-    const link_front = `${process.env.FRONT_END}/account/verifyEmail`
+    const link_front = `${process.env.FRONT_END}/account/verifyEmail/${user.email}`
 
     await prisma.emailVerify.create({
         data: {

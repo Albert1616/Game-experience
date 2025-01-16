@@ -9,21 +9,25 @@ import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { useRegisterUserMutation } from '@/services/user'
+import { CircularProgress } from '@mui/material'
 
 const FormRegister = () => {
     const { handleSubmit, register, reset, formState: { errors } } = useForm<UserType>({
         resolver: zodResolver(User),
     })
-    const [registerUser, {isLoading, isError, error}] = useRegisterUserMutation();
+    const [registerUser, {isLoading, isError, error, isSuccess}] = useRegisterUserMutation();
     
     const router = useRouter();
     const handleCreateUser = async (data: UserType) => {
         try {
-            registerUser(data);
+            const response = await registerUser(data);
             if (isError){
                 toast.error(`${error}`)
             }else{
-                router.push(`/account/verifyEmail/${data.email}`);
+                toast.success("Conta criada com sucesso! um código de verificação foi enviado para seu email,acesse e confirme sua conta")
+                setTimeout(() => {
+                    router.push("/");
+                }, 3000)
             }
         } catch (error: any) {
             toast.error(`${error.message}`)
@@ -52,7 +56,8 @@ const FormRegister = () => {
                         {errors.confirm_password && <p className='text-red-500 text-xs'>{errors.confirm_password.message}</p>}
                     </div>
 
-                    <Button type='submit' className='w-1/2'>Criar conta</Button>
+                    <Button type='submit' className={`w-1/2 text-center ${isSuccess && "cursor-not-allowed"}`}
+                    disabled={isLoading}>{isLoading? <CircularProgress className='text-primaryWhite' size={20}/> : isSuccess ? 'Sucesso! 🥳🎉' : 'Criar conta'}</Button>
                 </form>
             </div>
         </div>
