@@ -51,11 +51,11 @@ export const GetOrderingByRating = async (
             headers: {
                 "Content-type": "application/json"
             },
-
         });
 
         if (!response.ok) {
-            res.status(500).json({ message: "Response error" }); // Use return para evitar múltiplas respostas
+            res.status(500).json({ message: "Response error" });
+            return; // Use return para evitar múltiplas respostas
         }
 
         const data = await response.json();

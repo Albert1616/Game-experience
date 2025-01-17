@@ -106,7 +106,7 @@ export const VerifyEmail = async (req: Request, res: Response) => {
 
         // CHECK IF EMAIL AND TOP IS VALID
         if (!email || !otp) {
-            res.status(400).json({ message: "Email or OTP is missing" });
+            res.status(400).json({ message: "Email ou OTP inválidos!" });
             return;
         }
 
@@ -117,7 +117,7 @@ export const VerifyEmail = async (req: Request, res: Response) => {
         })
 
         if (!existsUser) {
-            res.status(404).json({ message: "Not exists user with this email" });
+            res.status(404).json({ message: "Não existe usuário vinculado a este email." });
             return;
         }
 
@@ -129,7 +129,7 @@ export const VerifyEmail = async (req: Request, res: Response) => {
         })
 
         if (!existsVerifyEmail) {
-            res.status(400).json({ message: "Invalid OTP" });
+            res.status(400).json({ message: "OTP inválido." });
             return;
         }
 
@@ -138,7 +138,8 @@ export const VerifyEmail = async (req: Request, res: Response) => {
             existsVerifyEmail.createdAt.getTime() + 30 * 60 * 1000);
 
         if (currentDate > dataExpiration) {
-            res.status(500).json({ message: "OTP expired" })
+            SendEmailVerificationOTP(existsUser);
+            res.status(500).json({ message: "OTP expirado! Um novo código de confirmação foi enviado para seu email." })
             return;
         }
 
@@ -151,9 +152,9 @@ export const VerifyEmail = async (req: Request, res: Response) => {
             }
         })
 
-        res.status(200).json({ message: "Email verify with sucess" })
+        res.status(200).json({ message: "Email foi verificado com sucesso!" })
     } catch (error) {
-        res.status(500).json({ message: "Error to verify email" })
+        res.status(500).json({ message: `Erro ao verificar email. ${error}` })
     }
 }
 
@@ -163,12 +164,12 @@ export const Login = async (req: Request, res: Response) => {
             { email: string, password: string } = req.body;
 
         if (!email || !password) {
-            res.status(400).json({ message: "Email or password is missing" })
+            res.status(400).json({ message: "Email e senha são obrigatórios!" })
             return;
         }
 
         if (password.length < 8) {
-            res.status(400).json({ message: "Password must be at least 8 characters" })
+            res.status(400).json({ message: "A senha deve ter mais que 8 caracteres" })
             return;
         }
 
@@ -181,11 +182,11 @@ export const Login = async (req: Request, res: Response) => {
         if (existsUser) {
             const passwordVerify = await bcrypt.compare(password, existsUser?.password);
             if (!passwordVerify) {
-                res.status(401).json({ message: "Credetials invalid" })
+                res.status(401).json({ message: "Email ou senha inválidos!" })
                 return;
             }
         } else {
-            res.status(401).json({ message: "Credetials invalid" })
+            res.status(401).json({ message: "Email ou senha inválidos!" })
             return;
         }
 
@@ -203,7 +204,7 @@ export const Login = async (req: Request, res: Response) => {
 
         res.status(200).json({
             status: "Sucess",
-            message: "Login sucessful",
+            message: "Login efetuado com sucesso!",
             acessToken: acessToken,
             refreshToken: refreshToken,
             acessTokenExpiration: acessTokenExpiration,
@@ -212,7 +213,7 @@ export const Login = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
-        res.status(500).json({ message: `Authentication failed. ${error}` })
+        res.status(500).json({ message: `Falha na autenticação. ${error}` })
     }
 }
 

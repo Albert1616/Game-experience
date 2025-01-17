@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface stateTypes {
-    isDarkMode: boolean
+    isDarkMode: boolean,
+    loginModalIsOpen: boolean
 }
 
 const initialState: stateTypes = {
-    isDarkMode: false
+    isDarkMode: false,
+    loginModalIsOpen: false
 }
 
 const globalSlicer = createSlice({
@@ -14,9 +16,12 @@ const globalSlicer = createSlice({
     reducers: {
         setIsDarkMode: (state, action: PayloadAction<boolean>) => {
             state.isDarkMode = action.payload;
+        },
+        setLoginModalIsOpen: (state, action: PayloadAction<boolean>) => {
+            state.loginModalIsOpen = action.payload;
         }
     }
 })
 
-export const { setIsDarkMode } = globalSlicer.actions;
+export const { setIsDarkMode, setLoginModalIsOpen } = globalSlicer.actions;
 export default globalSlicer.reducer;

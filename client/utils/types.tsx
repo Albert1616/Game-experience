@@ -39,16 +39,24 @@ export interface ApiResponse {
 }
 
 export interface Session {
+    status: string,
+    message: string,
     acessToken: string,
     refreshToken: string,
     acessTokenExpiration: number,
     refreshTokenExpiration: number
 }
 
-export interface User{
-    id:string,
-    name:string,
-    email:string,
-    password:string,
+export interface User {
+    id: string,
+    name: string,
+    email: string,
+    password: string,
     confirm_password: string
+}
+
+export interface errorType {
+    data: {
+        message: string
+    }
 }

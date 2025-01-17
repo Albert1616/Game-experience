@@ -4,19 +4,41 @@ import { useForm } from 'react-hook-form'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import Link from 'next/link'
-import { Login } from '@/app/api/login'
 import { toast } from 'sonner'
-import { Session } from '@/utils/types'
+import { errorType } from '@/utils/types'
+import { useLoginMutation } from '@/services/user'
+import { CircularProgress } from '@mui/material'
+import { SetCookies } from '@/app/api/cookies'
+import { useAppDispatch, useAppSelector } from '@/lib/store'
+import { setLoginModalIsOpen } from '@/lib/features/globalSlicer'
 
 function FormLogin() {
     const { handleSubmit, register, formState: { errors } } = useForm<UserCredentialsType>({
         resolver: zodResolver(UserCredentials)
     })
+    const [login, { isLoading, isError, isSuccess }] = useLoginMutation()
+    const isLogin = useAppSelector((state) => state.global.loginModalIsOpen)
+    const dispatch = useAppDispatch();
 
-    const handleLogin = async (data: UserCredentialsType) => {
+    console.log(`Login no form ${isLogin}`)
+
+    const handleLogin = async (credentials: UserCredentialsType) => {
         try {
-            const response: Session = await Login(data);
-            toast.success("Login efetuado com sucess")
+            const response = await login(credentials);
+
+            if (isError) {
+                const error = response.error as errorType;
+                return toast.error(error.data.message);
+            }
+            const data = response.data;
+
+            SetCookies("AcessToken", data!.acessToken, data!.acessTokenExpiration);
+            SetCookies("RefreshToken", data!.refreshToken, data!.refreshTokenExpiration);
+
+            dispatch(setLoginModalIsOpen(false));
+            console.log(`Login no form ${isLogin}`)
+
+            toast.success("Login efetuado com sucesso!");
         } catch (error: any) {
             toast.error(error.message)
         }
@@ -41,7 +63,10 @@ function FormLogin() {
                 placeholder:dark:text-black'/>
                     {errors.password && <p className='text-red-500 text-sm'>{errors.password.message}</p>}
                 </div>
-                <Button type='submit' className=''>Entrar</Button>
+                <Button type='submit'
+                    disabled={isLoading}>
+                    {isLoading ? <CircularProgress /> : "Entrar"}
+                </Button>
                 <div className=''>
                     <Link href="/account/signup" className='font-extrabold text-black hover:text-gray-700 hover:underline text-xs'>Esqueceu sua senha?</Link>
                     <p className='font-extrabold text-gray-700 text-xs'>Novo por aqui?
