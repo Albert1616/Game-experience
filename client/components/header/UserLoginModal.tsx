@@ -9,6 +9,7 @@ import FormLogin from "../formUser/FormLogin";
 import { Toaster } from "sonner";
 import { useAppDispatch, useAppSelector } from "@/lib/store";
 import { setLoginModalIsOpen } from "@/lib/features/globalSlicer";
+import { Button } from "../ui/button";
 
 const UserLoginModal = () => {
   const loginModalIsOpen = useAppSelector((state) => state.global.loginModalIsOpen);
@@ -18,11 +19,12 @@ const UserLoginModal = () => {
 
   return (
     <Dialog open={loginModalIsOpen} onOpenChange={(open) => dispatch(setLoginModalIsOpen(open))}>
-      <DialogTrigger><FaUserCircle size={25} className="text-black dark:text-white" /></DialogTrigger>
+      <DialogTrigger asChild>
+        <Button className='bg-black dark:bg-primaryWhite text-white dark:text-black py-2 px-8 rounded-md text-lg font-semibold'>Login</Button>
+      </DialogTrigger>
       <DialogContent className="h-3/4 2xl:h-1/2 w-4/5 flex flex-col items-center">
         <FormLogin />
         <Toaster richColors closeButton position="bottom-center" />
-        <p className="text-black text-xl">MODAL: {loginModalIsOpen}</p>
       </DialogContent>
     </Dialog>
   )

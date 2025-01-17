@@ -1,12 +1,16 @@
 import { UserCredentialsType } from '@/utils/formTypesZod'
-import { Session, User } from '@/utils/types'
+import { Game, Session, User } from '@/utils/types'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const userApi = createApi({
     reducerPath: 'userApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/' }),
-    tagTypes: ['Register', 'Verify_email', 'Login'],
+    tagTypes: ['Games','Register', 'Verify_email', 'Login'],
     endpoints: (builder) => ({
+        getGames:builder.query<Game[], void>({
+            query: () => "/games",
+            providesTags: ["Games"]
+        }),
         registerUser: builder.mutation<User, Partial<User>>({
             query: (body) => ({
                 url: 'user/register',
@@ -37,4 +41,4 @@ export const userApi = createApi({
     })
 })
 
-export const { useRegisterUserMutation, useVerifyEmailMutation, useLoginMutation } = userApi
+export const {useGetGamesQuery, useRegisterUserMutation, useVerifyEmailMutation, useLoginMutation } = userApi

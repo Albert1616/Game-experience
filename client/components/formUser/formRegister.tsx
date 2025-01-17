@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { useLoginMutation, useRegisterUserMutation } from '@/services/user'
+import { useLoginMutation, useRegisterUserMutation } from '@/services/api'
 import { CircularProgress } from '@mui/material'
 
 const FormRegister = () => {

@@ -14,12 +14,15 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { useGetGamesQuery } from '@/services/api';
 
 export const GamesYear = () => {
-  const { data: games, isLoading, isError } = useQuery({
-    queryKey: ['games_list'],
-    queryFn: GetGames
-  })
+  // const { data: games, isLoading, isError } = useQuery({
+  //   queryKey: ['games_list'],
+  //   queryFn: GetGames
+  // })
+
+  const {data: games, isLoading, isError} = useGetGamesQuery();
   const [gameGeneral, setGameGeneral] = useState<Game>({
     id: 0,
     description: '',

@@ -10,7 +10,7 @@ import UserProfile from './UserProfile';
 
 function Header() {
   const [isAuth, setIsAuth] = useState(false);
-  const session = Cookie.get("acessToken");
+  const session = Cookie.get();
 
   useEffect(() => {
     if (session) setIsAuth(true);
@@ -23,9 +23,9 @@ function Header() {
       <Nav />
       <div className='hidden lg:flex items-center gap-5'>
         <SocialIcons />
-        <div className='ml-10 flex items-center gap-2'>
+        <div className='ml-10 flex items-center gap-3'>
           <ButtonSetMode className='text-black dark:text-white hover:text-primary dark:hover:text-primaryDark' />
-          {isAuth ? <UserProfile />: <UserLoginModal />}
+          {isAuth ? <UserProfile/> : <UserLoginModal />}
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import globalSlicer from "@/lib/features/globalSlicer";
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import {userApi} from '@/services/user'
+import {userApi} from '@/services/api'
 
 export const makeStore = () => {
     return configureStore({

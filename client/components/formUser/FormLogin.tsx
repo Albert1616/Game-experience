@@ -6,7 +6,7 @@ import { Button } from '../ui/button'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { errorType } from '@/utils/types'
-import { useLoginMutation } from '@/services/user'
+import { useLoginMutation } from '@/services/api'
 import { CircularProgress } from '@mui/material'
 import { SetCookies } from '@/app/api/cookies'
 import { useAppDispatch, useAppSelector } from '@/lib/store'
@@ -17,10 +17,7 @@ function FormLogin() {
         resolver: zodResolver(UserCredentials)
     })
     const [login, { isLoading, isError, isSuccess }] = useLoginMutation()
-    const isLogin = useAppSelector((state) => state.global.loginModalIsOpen)
     const dispatch = useAppDispatch();
-
-    console.log(`Login no form ${isLogin}`)
 
     const handleLogin = async (credentials: UserCredentialsType) => {
         try {
@@ -36,8 +33,6 @@ function FormLogin() {
             SetCookies("RefreshToken", data!.refreshToken, data!.refreshTokenExpiration);
 
             dispatch(setLoginModalIsOpen(false));
-            console.log(`Login no form ${isLogin}`)
-
             toast.success("Login efetuado com sucesso!");
         } catch (error: any) {
             toast.error(error.message)
