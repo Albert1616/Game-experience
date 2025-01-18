@@ -17,17 +17,17 @@ function GeneralGame({ game }: props) {
         animate={{ x: 0, opacity: 1 }}
         transition={{ ease: "easeInOut", duration: 0.5, delay: 0.1 }}
         className='rounded-xl
-      col-span-5 max-w-full cursor-pointer h-[25em] xl:h-[40em] md:h-[30em] md:max-h-full  relative'>
+      col-span-5 max-w-full cursor-pointer h-[20em] md:h-full relative'>
         <Image
           src={game.background_image}
           alt="Game banner"
           height={1200}
           width={1500}
           className="w-full h-full" />
-        <div className="absolute w-full h-full inset-0 bg-gradient-to-t to-transparent from-black flex flex-col gap-4 justify-end items-start p-5">
+        <div className="absolute w-full h-full inset-0 bg-gradient-to-t to-transparent from-black flex flex-col xl:gap-4 justify-end items-start p-5">
           <h1 className="text-xl md:text-4xl lg:text-5xl font-extrabold">{game.name}</h1>
-          <div className="flex flex-wrap items-center gap-10">
-            <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 md:gap-10">
+            <div className="flex flex-wrap items-center gap-2">
               {game.genres.map((genre, index) => <Tag key={index} tag={genre.name} />)}
             </div>
             <div className="flex items-center gap-4">

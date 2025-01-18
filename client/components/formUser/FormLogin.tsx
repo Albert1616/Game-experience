@@ -8,15 +8,15 @@ import { toast } from 'sonner'
 import { errorType } from '@/utils/types'
 import { useLoginMutation } from '@/services/api'
 import { CircularProgress } from '@mui/material'
-import { SetCookies } from '@/app/api/cookies'
-import { useAppDispatch, useAppSelector } from '@/lib/store'
+import { SetCookies } from '@/app/(cookies)/cookies'
+import { useAppDispatch } from '@/lib/store'
 import { setLoginModalIsOpen } from '@/lib/features/globalSlicer'
 
 function FormLogin() {
     const { handleSubmit, register, formState: { errors } } = useForm<UserCredentialsType>({
         resolver: zodResolver(UserCredentials)
     })
-    const [login, { isLoading, isError, isSuccess }] = useLoginMutation()
+    const [login, { isLoading, isError }] = useLoginMutation()
     const dispatch = useAppDispatch();
 
     const handleLogin = async (credentials: UserCredentialsType) => {

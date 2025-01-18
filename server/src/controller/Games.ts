@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { ApiResponseGames } from '../../utils/types/GameTypes';
 
 export const GetGames = async (req: Request, res: Response) => {
     try {
@@ -13,8 +14,8 @@ export const GetGames = async (req: Request, res: Response) => {
             res.status(500).json({ message: "Response error" }); // Use return para evitar múltiplas respostas
         }
 
-        const data = await response.json();
-        res.status(200).json(data); // Use return para garantir que a execução pare aqui
+        const data = await response.json() as ApiResponseGames;
+        res.status(200).json(data.results); // Use return para garantir que a execução pare aqui
     } catch (error) {
         res.status(500).json({ message: `Error retrieving games: ${error}` }); // Garantir que a resposta seja enviada e a função pare
     }
@@ -35,8 +36,8 @@ export const GetOrderingByReleased = async (
             res.status(500).json({ message: "Response error" }); // Use return para evitar múltiplas respostas
         }
 
-        const data = await response.json();
-        res.status(200).json(data); // Use return para garantir que a execução pare aqui
+        const data = await response.json() as ApiResponseGames;
+        res.status(200).json(data.results); // Use return para garantir que a execução pare aqui
     } catch (error) {
         res.status(500).json({ message: `Error retrieving games: ${error}` }); // Garantir que a resposta seja enviada e a função pare
     }
@@ -58,8 +59,8 @@ export const GetOrderingByRating = async (
             return; // Use return para evitar múltiplas respostas
         }
 
-        const data = await response.json();
-        res.status(200).json(data); // Use return para garantir que a execução pare aqui
+        const data = await response.json() as ApiResponseGames;
+        res.status(200).json(data.results); // Use return para garantir que a execução pare aqui
     } catch (error) {
         res.status(500).json({ message: `Error retrieving games: ${error}` }); // Garantir que a resposta seja enviada e a função pare
     }
@@ -81,8 +82,8 @@ export const SearchGames = async (
             res.status(500).json({ message: "Response error" }); // Use return para evitar múltiplas respostas
         }
 
-        const data = await response.json();
-        res.status(200).json(data); // Use return para garantir que a execução pare aqui
+        const data = await response.json() as ApiResponseGames;
+        res.status(200).json(data.results); // Use return para garantir que a execução pare aqui
     } catch (error) {
         res.status(500).json({ message: `Error retrieving games: ${error}` }); // Garantir que a resposta seja enviada e a função pare
     }
@@ -102,8 +103,8 @@ export const GetGamesByGenre = async (req: Request, res: Response) => {
             res.status(500).json({ message: "Response error" });
         }
 
-        const data = await response.json();
-        res.status(200).json(data);
+        const data = await response.json() as ApiResponseGames;
+        res.status(200).json(data.results);
     } catch (error) {
         res.status(500).json({ message: `Error retrieving games: ${error}` });
     }

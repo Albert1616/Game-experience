@@ -4,9 +4,6 @@ import { useEffect, useState } from 'react'
 import GeneralGame from './GeneralGame'
 import GameCard from './GameCard';
 import { CircularProgress } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { GetGames } from '@/app/api/actions';
-import { Game } from '@/utils/types';
 import {
   Carousel,
   CarouselContent,
@@ -15,14 +12,10 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { useGetGamesQuery } from '@/services/api';
+import { Game } from '@/utils/types';
 
 export const GamesYear = () => {
-  // const { data: games, isLoading, isError } = useQuery({
-  //   queryKey: ['games_list'],
-  //   queryFn: GetGames
-  // })
-
-  const {data: games, isLoading, isError} = useGetGamesQuery();
+  const { data: games, isLoading, isError } = useGetGamesQuery();
   const [gameGeneral, setGameGeneral] = useState<Game>({
     id: 0,
     description: '',
@@ -48,7 +41,7 @@ export const GamesYear = () => {
   return (
     <div>
       <div className='mt-28 h-full md:hidden'>
-        <Carousel>
+        <Carousel opts={{ loop: true }}>
           <CarouselContent className='h-full'>
             {games?.map((game) => (
               <CarouselItem key={game.id}>

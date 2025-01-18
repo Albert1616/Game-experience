@@ -25,19 +25,6 @@ export interface Game {
     parent_platforms: ParentPlatform[],
     tags: Tag[],
 }
-
-export interface GameComplete extends Game {
-    description: string
-}
-export enum typesGames {
-    RATING = "rating",
-    LATEST = "latest"
-}
-
-export interface ApiResponse {
-    results: Game[];
-}
-
 export interface Session {
     status: string,
     message: string,
@@ -60,3 +47,30 @@ export interface errorType {
         message: string
     }
 }
+export enum typesGames {
+    RATING = "rating",
+    LATEST = "latest"
+}
+
+// export interface Session {
+//     status: string,
+//     message: string,
+//     acessToken: string,
+//     refreshToken: string,
+//     acessTokenExpiration: number,
+//     refreshTokenExpiration: number
+// }
+
+// export interface User {
+//     id: string,
+//     name: string,
+//     email: string,
+//     password: string,
+//     confirm_password: string
+// }
+
+// export interface errorType {
+//     data: {
+//         message: string
+//     }
+// }

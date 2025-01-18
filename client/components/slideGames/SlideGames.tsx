@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client'
 
 import React from 'react'
@@ -10,10 +11,9 @@ import {
 } from "@/components/ui/carousel"
 import CardSlide from './CardSlide'
 import Link from 'next/link'
-import { useQuery } from '@tanstack/react-query'
-import { GetLatestGames, GetRatingGames } from '@/app/api/actions'
 import { CircularProgress } from '@mui/material'
 import { typesGames } from '@/utils/types'
+import { useGetGamesByQuery } from '@/services/api'
 
 interface PropsSlide {
     title: string,
@@ -21,10 +21,7 @@ interface PropsSlide {
 }
 
 function SlideGames({ title, type }: PropsSlide) {
-    const { data: games, isLoading, isError } = useQuery({
-        queryKey: ["gamesSlider", type],
-        queryFn: type === "latest" ? GetLatestGames : GetRatingGames
-    })
+    const { data: games, isLoading, isError } = useGetGamesByQuery(type)
 
     if (isLoading || !games) return <div className='w-full h-full flex items-center justify-center'>
         <CircularProgress />
@@ -37,8 +34,8 @@ function SlideGames({ title, type }: PropsSlide) {
                 <Link href='/' className='relative flex gap-2'>{title + " >"}</Link>
             </h1>
             <div className='mt-2'>
-                <Carousel className='' opts={{ loop: true }}>
-                    <CarouselContent className=''>
+                <Carousel opts={{ loop: true }}>
+                    <CarouselContent>
                         {games.map((game, index) => (
                             index < 15 && game.background_image ? (<CarouselItem key={game.id} className='sm:basis-1/2 lg:basis-1/5 h-full'>
                                 <CardSlide {...game} type={type} />
