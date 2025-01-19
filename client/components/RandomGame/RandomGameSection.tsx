@@ -16,7 +16,7 @@ const RandomGameSection = () => {
         }
     }
     return (
-        <div className='w-full md:h-[30em] grid grid-cols-1 md:grid-cols-6 gap-4 pt-10 px-4 bg-primaryWhite dark:bg-primaryGray'>
+        <div className='w-full grid grid-cols-1 md:grid-cols-6 gap-4 py-10 px-4 bg-primaryWhite dark:bg-primaryGray'>
             <div className='flex flex-col md:items-center md:justify-center col-span-3'>
                 <div className='flex flex-col items-center'>
                     <p className="text-black dark:text-white text-[16px] md:text-xl font-medium text-center w-fit leading-tight">Interressado em novas experiências?</p>
@@ -69,13 +69,15 @@ const RandomGameSection = () => {
                 {active ? (
                     <RandomGame genre={genre} />
                 ) : (
-                    <Image
-                        alt='Imagem de animada, escrito "seu game aqui"'
-                        src="/gameCard.jpeg"
-                        height={200}
-                        width={200}
-                        quality={100}
-                        className='rounded-2xl w-full md:h-full' />
+                    <div className='w-full max-h-full flex justify-center'>
+                        <Image
+                            alt='Imagem de animada, escrito "seu game aqui"'
+                            src="/gameCard.jpeg"
+                            height={200}
+                            width={200}
+                            quality={100}
+                            className='w-[80%] h-full rounded-lg' />
+                    </div>
                 )}
             </div>
         </div>

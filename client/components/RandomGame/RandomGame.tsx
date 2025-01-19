@@ -1,8 +1,7 @@
-import { GetGamesByGenre } from '@/app/api/actions'
 import { Game } from '@/utils/types'
-import { useQuery } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
 import CardRandomGame from './CardRandomGame'
+import { useGetGamesByGenreQuery } from '@/services/api'
 
 type props = {
     genre: string
@@ -20,10 +19,10 @@ const RandomGame = ({ genre }: props) => {
         tags: [],
     })
 
-    const { data: games, isLoading, isError } = useQuery({
-        queryKey: ["randomGame", genre],
-        queryFn: () => GetGamesByGenre(genre)
-    })
+    const { data: games, isLoading, isError } = useGetGamesByGenreQuery(genre);
+
+    console.log(games);
+    console.log(genre);
 
     useEffect(() => {
         if (!isLoading && games && games.length > 0) {

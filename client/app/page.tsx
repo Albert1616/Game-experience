@@ -20,7 +20,7 @@ export default function Home() {
           <GamesYear />
           <SlideGames title="Lançamentos" type={typesGames.LATEST} />
           <SlideGames title="Favoritos dos gamers" type={typesGames.RATING} />
-          {/* <RandomGameSection /> */}
+          <RandomGameSection />
         </div>
       </DashBoardWrapper>
     </StoreProvider>
