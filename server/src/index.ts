@@ -21,6 +21,9 @@ dotenv.config();
 const corsOptions = {
     origin: process.env.FRONT_END,
     optionsSuccessStatus: 200,
+    methods: ['GET', 'POST', 'UPDATE', 'DELETE'],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
 }
 app.use(cors(corsOptions));
 

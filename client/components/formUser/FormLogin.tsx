@@ -8,7 +8,6 @@ import { toast } from 'sonner'
 import { errorType } from '@/utils/types'
 import { useLoginMutation } from '@/services/api'
 import { CircularProgress } from '@mui/material'
-import { SetCookies } from '@/app/(cookies)/cookies'
 import { useAppDispatch } from '@/lib/store'
 import { setLoginModalIsOpen } from '@/lib/features/globalSlicer'
 
@@ -16,24 +15,22 @@ function FormLogin() {
     const { handleSubmit, register, formState: { errors } } = useForm<UserCredentialsType>({
         resolver: zodResolver(UserCredentials)
     })
-    const [login, { isLoading, isError }] = useLoginMutation()
+    const [login, { isLoading, isError, isSuccess }] = useLoginMutation()
     const dispatch = useAppDispatch();
 
     const handleLogin = async (credentials: UserCredentialsType) => {
         try {
             const response = await login(credentials);
-
             if (isError) {
                 const error = response.error as errorType;
                 return toast.error(error.data.message);
             }
-            const data = response.data;
-
-            SetCookies("AcessToken", data!.acessToken, data!.acessTokenExpiration);
-            SetCookies("RefreshToken", data!.refreshToken, data!.refreshTokenExpiration);
-
-            dispatch(setLoginModalIsOpen(false));
             toast.success("Login efetuado com sucesso!");
+            setTimeout(() => {
+                dispatch(setLoginModalIsOpen(false));
+            }, 2000);
+            window.location.reload();
+
         } catch (error: any) {
             toast.error(error.message)
         }
@@ -60,7 +57,7 @@ function FormLogin() {
                 </div>
                 <Button type='submit'
                     disabled={isLoading}>
-                    {isLoading ? <CircularProgress /> : "Entrar"}
+                    {isLoading ? <CircularProgress size={10} /> : "Entrar"}
                 </Button>
                 <div className=''>
                     <Link href="/account/signup" className='font-extrabold text-black hover:text-gray-700 hover:underline text-xs'>Esqueceu sua senha?</Link>

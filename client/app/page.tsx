@@ -14,17 +14,15 @@ import { Toaster } from "sonner";
 export default function Home() {
   return (
     <StoreProvider>
-      <QueryClientProvider client={queryClient}>
-        <DashBoardWrapper>
-          <Header />
-          <div className="flex flex-col gap-4 px-10">
-            <GamesYear />
-            <SlideGames title="Lançamentos" type={typesGames.LATEST} />
-            <SlideGames title="Favoritos dos gamers" type={typesGames.RATING} />
-            <RandomGameSection />
-          </div>
-        </DashBoardWrapper>
-      </QueryClientProvider>
+      <DashBoardWrapper>
+        <Header />
+        <div className="flex flex-col gap-4 px-10">
+          <GamesYear />
+          <SlideGames title="Lançamentos" type={typesGames.LATEST} />
+          <SlideGames title="Favoritos dos gamers" type={typesGames.RATING} />
+          {/* <RandomGameSection /> */}
+        </div>
+      </DashBoardWrapper>
     </StoreProvider>
   );
 }
