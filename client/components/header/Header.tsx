@@ -16,7 +16,6 @@ function Header() {
   useEffect(() => {
     const auth = async () => {
       const logged = await isAuth()
-      console.log(`LOGADO: ${logged}`)
       setAuth(logged);
     }
 

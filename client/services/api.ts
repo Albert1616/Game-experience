@@ -19,6 +19,10 @@ export const userApi = createApi({
             query: (genre) => `/games/genre?genre=${genre}`,
             providesTags: ["Games"]
         }),
+        getGameById: builder.query<Game, String>({
+            query: (id) => `/games/detail/${id}`,
+            providesTags: ['Games']
+        }),
         registerUser: builder.mutation<User, Partial<User>>({
             query: (body) => ({
                 url: 'user/register',
@@ -63,6 +67,7 @@ export const {
     useGetGamesQuery,
     useGetGamesByQuery,
     useGetGamesByGenreQuery,
+    useGetGameByIdQuery,
     useRegisterUserMutation,
     useVerifyEmailMutation,
     useLoginMutation,

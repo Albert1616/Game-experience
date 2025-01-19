@@ -76,7 +76,7 @@ const RandomGameSection = () => {
                             height={200}
                             width={200}
                             quality={100}
-                            className='w-[80%] h-full rounded-lg' />
+                            className='w-[80%] h-full rounded-lg transition-opacity duration-300' />
                     </div>
                 )}
             </div>

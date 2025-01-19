@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/carousel"
 import CardSlide from './CardSlide'
 import Link from 'next/link'
-import { CircularProgress, Skeleton } from '@mui/material'
+import { Skeleton } from '@mui/material'
 import { typesGames } from '@/utils/types'
 import { useGetGamesByQuery } from '@/services/api'
 
@@ -22,6 +22,8 @@ interface PropsSlide {
 
 function SlideGames({ title, type }: PropsSlide) {
     const { data: games, isLoading, isError } = useGetGamesByQuery(type)
+
+    console.log(`LISTA DE GAMES: ${games}`);
 
     if (isError) return <div className='w-full h-full flex items-center justify-center'>Errot to retriving games</div>
     return (

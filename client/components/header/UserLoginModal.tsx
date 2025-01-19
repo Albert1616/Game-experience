@@ -15,7 +15,6 @@ const UserLoginModal = () => {
   const loginModalIsOpen = useAppSelector((state) => state.global.loginModalIsOpen);
 
   const dispatch = useAppDispatch();
-  console.log(loginModalIsOpen)
 
   return (
     <Dialog open={loginModalIsOpen} onOpenChange={(open) => dispatch(setLoginModalIsOpen(open))}>

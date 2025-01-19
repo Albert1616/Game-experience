@@ -66,6 +66,23 @@ export const GetOrderingByRating = async (
     }
 };
 
+export const GetDetailGame = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const response = await fetch(`${process.env.BASE_URL}/games/${id}?key=${process.env.API_KEY}`, {
+            method: 'GET',
+            headers: {
+                "Content-type": "application/json",
+            },
+        });
+
+        const data = await response.json() as ApiResponseGames;
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({ message: `Erro ao retornar detalhes do jogo. ${error}` })
+    }
+}
+
 export const SearchGames = async (
     req: Request, res: Response
 ) => {

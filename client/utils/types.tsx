@@ -17,7 +17,7 @@ interface Tag {
 
 export interface Game {
     id: number,
-    description: string,
+    description_raw: string,
     name: string,
     background_image: string,
     rating: number,
@@ -51,26 +51,3 @@ export enum typesGames {
     RATING = "rating",
     LATEST = "latest"
 }
-
-// export interface Session {
-//     status: string,
-//     message: string,
-//     acessToken: string,
-//     refreshToken: string,
-//     acessTokenExpiration: number,
-//     refreshTokenExpiration: number
-// }
-
-// export interface User {
-//     id: string,
-//     name: string,
-//     email: string,
-//     password: string,
-//     confirm_password: string
-// }
-
-// export interface errorType {
-//     data: {
-//         message: string
-//     }
-// }

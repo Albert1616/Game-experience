@@ -10,7 +10,7 @@ type props = {
 const RandomGame = ({ genre }: props) => {
     const [game, setGame] = useState<Game>({
         id: 0,
-        description: '',
+        description_raw: '',
         name: '',
         background_image: '',
         rating: 0,
@@ -19,10 +19,7 @@ const RandomGame = ({ genre }: props) => {
         tags: [],
     })
 
-    const { data: games, isLoading, isError } = useGetGamesByGenreQuery(genre);
-
-    console.log(games);
-    console.log(genre);
+    const { data: games, isLoading } = useGetGamesByGenreQuery(genre);
 
     useEffect(() => {
         if (!isLoading && games && games.length > 0) {
