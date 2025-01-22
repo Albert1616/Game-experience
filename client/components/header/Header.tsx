@@ -9,6 +9,8 @@ import ButtonSetMode from '../ButtonSetMode';
 import UserLoginModal from './UserLoginModal';
 import UserProfile from './UserProfile';
 import { isAuth } from '@/app/(isAuth)/isAuth'
+import SearchComponent from './SearchComponent'
+import ReactDOM from 'react-dom'
 
 function Header() {
   const [auth, setAuth] = useState(false);
@@ -22,8 +24,8 @@ function Header() {
     auth()
   }, [])
   return (
-    <div className='container bg-background dark:bg-black fixed inset-x-0 right-0 left-0 z-50 top-0 shadow-sm mx-auto py-5 flex 
-    justify-between items-center text-xl'>
+    <div className='bg-background dark:bg-black fixed inset-x-0 right-0 left-0 z-50 top-0 shadow-sm py-5 flex 
+    justify-around items-center text-xl'>
       <Logo />
       <NavMobile />
       <Nav />

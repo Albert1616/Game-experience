@@ -14,6 +14,7 @@ main,
 #root,
 .app {
   width: 100%;
+  overflow-x: hidden;
   @apply min-h-screen;
   @apply bg-background dark:bg-[#1B1717];
   @apply text-white leading-loose;

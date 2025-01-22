@@ -3,10 +3,8 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { useGetGameByIdQuery } from '@/services/api';
 import { CircularProgress, Rating } from '@mui/material';
 import { StarIcon } from 'lucide-react';
-import Container from "@/components/Container";
 import React, { useState } from 'react'
 import { FaWindows, FaPlaystation, FaXbox, FaAndroid, FaApple } from 'react-icons/fa';
-import { useAppSelector } from '@/lib/store';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 type Props = {
@@ -17,11 +15,6 @@ const Game = ({ id }: Props) => {
     const { data: game, isLoading, isError } = useGetGameByIdQuery(id);
 
     const [seeMore, setSeeMore] = useState<boolean>(false);
-
-    const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
-
-    console.log(game);
-
     const Tag = (name: string) => {
         return <div className="py-1 px-2 bg-gray-600/40 rounded-lg">{name}</div>
     }
@@ -84,10 +77,12 @@ const Game = ({ id }: Props) => {
                         }>
                             {game!.description_raw}
                         </p>
-                        {!seeMore && (
+                        {!seeMore && game!.description_raw.length > 200 && (
                             <div className='absolute bottom-0 w-full border-none bg-gradient-to-b from-transparent to-white h-2/5' />
                         )}
                     </div>
+                    {game!.description_raw.length > 200 && (
+
                     <p className='bg-transparent hover:bg-transparent hover:underline shadow-none text-xl text-left font-bold text-red-500
                     cursor-pointer flex items-center gap-1'
                         onClick={() => setSeeMore(!seeMore)}>
@@ -96,33 +91,27 @@ const Game = ({ id }: Props) => {
                             {seeMore ? <IoIosArrowUp /> : <IoIosArrowDown />}
                         </span>
                     </p>
+                    )}
                 </div>
-                <div className="flex flex-col gap-1">
-                    <h2 className='text-black dark:text-white text-3xl font-bold'>Gêneros</h2>                            <div className="flex gap-1 items-center">
-                        {game!.genres && game!.genres.map((genre) => (
-                            Tag(genre.name)
-                        ))}
+                {game!.genres.length > 0 && (
+                    <div className="flex flex-col gap-1">
+                        <h2 className='text-black dark:text-white text-3xl font-bold'>Gêneros</h2>                            <div className="flex gap-1 items-center">
+                            {game!.genres && game!.genres.map((genre) => (
+                                Tag(genre.name)
+                            ))}
+                        </div>
                     </div>
-                </div>
-                <div className="flex flex-col gap-1 mt-6">
-                    <h2 className='text-black dark:text-white text-3xl font-bold'>Tags</h2>                            <div className="flex flex-wrap gap-1">
-                        {game!.tags && game!.tags.length > 0 ? game!.tags.map((tag) => (
-                            Tag(tag.name)
-                        )) : <p className="text-xl font-bold">-</p>}
+                )}
+                {game!.tags.length > 0 && (
+                    <div className="flex flex-col gap-1 mt-6">
+                        <h2 className='text-black dark:text-white text-3xl font-bold'>Tags</h2>                            <div className="flex flex-wrap gap-1">
+                            {game!.tags && game!.tags.length > 0 ? game!.tags.map((tag) => (
+                                Tag(tag.name)
+                            )) : <p className="text-xl font-bold">-</p>}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
-
-            {/* <div className="p-4 flex flex-col gap-4 bg-center">
-                <div className="flex flex-col gap-3">
-                    
-                    
-                </div>
-                <div className="flex flex-col gap-10 lg:gap-7">
-
-                </div>
-                
-            </div> */}
         </div>
     )
 }
