@@ -1,20 +1,22 @@
-'use client'
-
 import StoreProvider from "@/app/StoreProvider";
 import Game from "./Game";
 import Header from "@/components/header/Header";
+import { Suspense } from "react";
+import { CircularProgress } from "@mui/material";
 
 interface PropsUrl {
-    params: {
-        id: string
-    }
+    params: Promise<{id: string}>
 }
 
-export default function GamePage({ params }: PropsUrl) {
+export default async function GamePage({ params }: PropsUrl) {
+    const id = (await params).id;
     return (
         <StoreProvider>
             <Header />
-            <Game id={params.id} />
+            <Game id={id} />
+            {/* <Suspense fallback={<CircularProgress />}>
+                <Game id={params.id} />
+            </Suspense> */}
         </StoreProvider>
     )
 }

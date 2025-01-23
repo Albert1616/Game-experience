@@ -17,7 +17,7 @@ const CardGameResult = ({game}: Props) => {
     onClick={() => route.push(`/game/${game.id}`)}>
         <div className='w-[5em] h-[5em] rounded-lg mt-3'>
             <Image
-            src={game.background_image}
+            src={game.background_image != "" ? game.background_image: "/game_not_image.jpg"}
             alt='Card de resultado para a busca de games'
             width={80}
             height={80} 

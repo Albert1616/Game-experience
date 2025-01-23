@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { useGetGameByIdQuery } from '@/services/api';
@@ -64,8 +66,10 @@ const Game = ({ id }: Props) => {
                 </div>
             </div>
             <div className="flex flex-wrap gap-3 items-center mt-6 pl-3">
-                {game!.parent_platforms && game!.parent_platforms.map((data) => (
-                    PlatformIcon(data.platform.name)
+                {game!.parent_platforms && game!.parent_platforms.map((data, index) => (
+                    <div key={index}>
+                        {PlatformIcon(data.platform.name)}
+                    </div>
                 ))}
             </div>
             <div className='mt-3 p-3 gap-6'>

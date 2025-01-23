@@ -40,7 +40,7 @@ const SlideGeneralGame = () => {
         className='w-full h-full'>
           <CarouselContent className='h-full'>
             {games?.map((game) => (
-              <CarouselItem className='basis-1/3 h-[25em] p-0'>
+              <CarouselItem key={game.id} className='basis-1/3 h-[25em] p-0'>
                 <Image
                 src={game.background_image}
                 alt='Game banner'

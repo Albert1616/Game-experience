@@ -19,7 +19,7 @@ function GeneralGame({ game }: props) {
         className='rounded-xl
       col-span-5 max-w-full cursor-pointer h-[20em] md:h-full relative'>
         <Image
-          src={game.background_image}
+          src={game.background_image != "" ? game.background_image: "/game_not_image.jpg"}
           alt="Game banner"
           height={1200}
           width={1500}

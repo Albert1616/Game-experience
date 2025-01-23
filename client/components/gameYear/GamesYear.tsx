@@ -20,7 +20,7 @@ export const GamesYear = () => {
   const { data: games = [], isLoading, isError } = useGetGamesQuery();
   const [gameGeneral, setGameGeneral] = useState<Game>({
     id: 0,
-    description: '',
+    description_raw: '',
     name: '',
     background_image: '',
     rating: 0,
