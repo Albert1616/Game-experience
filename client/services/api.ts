@@ -24,7 +24,7 @@ export const userApi = createApi({
             providesTags: ['Games']
         }),
         SearchGames: builder.query<Game[], String>({
-            query: (query) => `/games/search&query=${query}`,
+            query: (query) => `/games/search?query=${query}`,
             providesTags: ['Games']
         }),
         registerUser: builder.mutation<User, Partial<User>>({

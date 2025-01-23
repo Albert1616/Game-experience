@@ -23,8 +23,6 @@ interface PropsSlide {
 function SlideGames({ title, type }: PropsSlide) {
     const { data: games, isLoading, isError } = useGetGamesByQuery(type)
 
-    console.log(`LISTA DE GAMES: ${games}`);
-
     if (isError) return <div className='w-full h-full flex items-center justify-center'>Errot to retriving games</div>
     return (
         <div className='w-full mt-8'>

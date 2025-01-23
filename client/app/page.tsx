@@ -9,8 +9,8 @@ import { typesGames } from "@/utils/types";
 import RandomGameSection from "@/components/RandomGame/RandomGameSection";
 import { Toaster } from "sonner";
 import SlideGeneralGame from "@/components/slideGeneralGame/slideGeneralGame";
-import SearchComponent from "@/components/header/SearchComponent";
-import ReactDOM from "react-dom";
+import SearchComponent from "@/components/search/SearchComponent";
+import {createPortal} from "react-dom";
 
 export default function Home() {
   return (
@@ -24,10 +24,6 @@ export default function Home() {
           <RandomGameSection />
           <SlideGeneralGame />
         </div>
-        {ReactDOM.createPortal(
-        <SearchComponent />,
-        document.body
-      )}
       </DashBoardWrapper>
     </StoreProvider>
   );

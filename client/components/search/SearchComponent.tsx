@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Input } from '../ui/input'
 import { useSearchGamesQuery } from '@/services/api';
+import CardGameResult from './CardGameResult';
 
 const SearchComponent = () => {
     const [search, setSearch] = useState("");
@@ -12,12 +13,18 @@ const SearchComponent = () => {
 
     const {data:games, isLoading, isError} = useSearchGamesQuery(search);
   return (
-    <div className='absolute inset-0 top-0 right-0 z-90 w-screen h-screen bg-black/30'>
-        <Input className='bg-white text-black text-lg rounded-sm' />
+    <div className='flex flex-col items-center mt-12 px-10'>
+        <Input
+        value={search}
+        onChange={handleChangeSearch}
+        className='bg-transparent border-0 border-b border-b-white 
+        text-white text-2xl text-left px-0 rounded-sm focus:outline-none outline-none w-full' 
+        placeholder='Buscar...'/>
         {search != "" && games && games.length > 0 && (
-            <div className='bg-white'>
+            <div className='bg-transparente w-full grid grid-cols-1 md:grid-cols-2 gap-2 max-h-[28em]
+            overflow-y-auto'>
                 {games.map((game) => (
-                    <h2>{game.name}</h2>
+                    <CardGameResult game={game} />
                 ))}
             </div>
         )}
