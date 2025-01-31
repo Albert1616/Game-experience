@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
-import { ApiResponseGames } from '../../utils/types/GameTypes';
+import { ApiResponseGames, Game } from '../../utils/types/GameTypes';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export const GetGames = async (req: Request, res: Response) => {
     try {
@@ -76,7 +79,7 @@ export const GetDetailGame = async (req: Request, res: Response) => {
             },
         });
 
-        const data = await response.json() as ApiResponseGames;
+        const data = await response.json() as Game;
         res.status(200).json(data);
     } catch (error) {
         res.status(500).json({ message: `Erro ao retornar detalhes do jogo. ${error}` })
@@ -124,5 +127,53 @@ export const GetGamesByGenre = async (req: Request, res: Response) => {
         res.status(200).json(data.results);
     } catch (error) {
         res.status(500).json({ message: `Error retrieving games: ${error}` });
+    }
+}
+
+export const AddGameToFavorite = async (req: Request, res: Response) => {
+    try {
+        const {user,gameId} :
+        {user:string,gameId:string} = req.body;
+
+        if (!user || !gameId){
+            res.status(400).json({message:"Campos obrigatórios não informados"});
+            return;
+        }
+
+        const game = await GetDetailGame(req, res);
+
+        if (!game){
+            res.status(404).json({message:"Esse jogo não existe na base de dados"});
+            return;
+        }
+
+        if (await prisma.favoriteGame.findMany({where: {userId:user}})){
+            res.status(400).json({message:"O jogo ja esta nos seus favoritos"});
+            return;
+        }
+
+        const userUpdated = await prisma.user.update({
+            where:{
+                id: user
+            },
+            data:{
+                favorites: {
+                    create:{
+                        id: game.id,
+                        title: game.name,
+                        image: game.background_image,
+                    }
+                }
+            }
+        })
+
+        res.status(200).json({message:`Game favoritado com sucesso!`,
+            user: userUpdated
+        },
+            
+        )
+        
+    } catch (error) {
+        res.status(500).json({message : "Não foi possível favoritar o game"})
     }
 }

@@ -3,7 +3,6 @@
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -20,6 +19,16 @@ model User {
   password     String
   isVerify     Boolean            @default(false)
   refreshToken UserRefreshToken[]
+  favorites FavoriteGame[] @relation("UserFavorites")
+}
+
+model FavoriteGame {
+  id Int @id 
+  title String
+  image String
+  userId String
+
+  user User @relation("UserFavorites",references: [id], fields: [userId]) 
 }
 
 model UserRefreshToken {
