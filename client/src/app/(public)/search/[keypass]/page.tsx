@@ -1,7 +1,7 @@
 import Header from '@/components/header/Header'
 import React from 'react'
 import SearchGamesResult from './SearchGamesResult'
-import StoreProvider from '@/app/StoreProvider'
+import StoreProvider from '@/src/app/StoreProvider'
 
 type Props = {
     params: Promise<{ keypass: string }>

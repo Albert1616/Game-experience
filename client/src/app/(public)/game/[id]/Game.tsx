@@ -87,14 +87,14 @@ const Game = ({ id }: Props) => {
                     </div>
                     {game!.description_raw.length > 200 && (
 
-                    <p className='bg-transparent hover:bg-transparent hover:underline shadow-none text-xl text-left font-bold text-red-500
+                        <p className='bg-transparent hover:bg-transparent hover:underline shadow-none text-xl text-left font-bold text-red-500
                     cursor-pointer flex items-center gap-1'
-                        onClick={() => setSeeMore(!seeMore)}>
-                        {seeMore ? `Veja menos` : `Veja mais`}
-                        <span>
-                            {seeMore ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                        </span>
-                    </p>
+                            onClick={() => setSeeMore(!seeMore)}>
+                            {seeMore ? `Veja menos` : `Veja mais`}
+                            <span>
+                                {seeMore ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                            </span>
+                        </p>
                     )}
                 </div>
                 {game!.genres.length > 0 && (

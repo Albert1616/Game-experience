@@ -10,7 +10,7 @@ import RandomGameSection from "@/components/RandomGame/RandomGameSection";
 import { Toaster } from "sonner";
 import SlideGeneralGame from "@/components/slideGeneralGame/slideGeneralGame";
 import SearchComponent from "@/components/search/SearchComponent";
-import {createPortal} from "react-dom";
+import { createPortal } from "react-dom";
 
 export default function Home() {
   return (

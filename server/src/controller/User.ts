@@ -26,7 +26,7 @@ export const GetUserById = async (req: Request, res: Response) => {
         })
 
         if (!user) {
-            res.status(404).json({ message: "User not found" });
+            res.status(404).json({ message: "tete" });
             return;
         }
 
@@ -253,10 +253,6 @@ export const GetNewAcessToken = async (req: Request, res: Response) => {
     }
 }
 
-export const userProfile = async (req: Request, res: Response) => {
-    res.send(req.user);
-}
-
 export const Logout = async (req: Request, res: Response) => {
     try {
         const acessToken = req.cookies.AcessToken
@@ -402,3 +398,38 @@ export const UserPasswordReset = async (req: Request, res: Response) => {
         res.status(500).json({ message: `Error to change password. ${error}` })
     }
 }
+
+export const UserProfile = async (req: Request, res: Response) => {
+    try {
+        const acessToken = req.cookies.AcessToken;
+        let payload;
+        try {
+            payload = jwt.verify(acessToken, process.env.JWT_SECRET_KEY as string);
+        } catch (error) {
+            res.status(401).json({ message: "Token inválido ou expirado." });
+            return;
+        }
+        const userId = (payload as { userId: string }).userId;
+
+        if (!userId) {
+            res.status(400).json({ message: "Token inválido. ID do usuário não encontrado." });
+            return;
+        }
+        const user = await prisma.user.findUnique({
+            where: { id: userId }
+        });
+
+        if (!user) {
+            res.status(404).json({ message: "Usuário não encontrado!" });
+            return;
+        }
+
+        res.status(200).json({
+            id: user.id,
+            email: user.email,
+            nome: user.name
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao retornar as informações do usuário!" });
+    }
+};

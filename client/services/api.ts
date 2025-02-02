@@ -5,7 +5,7 @@ import { Session } from '@/utils/types'
 export const userApi = createApi({
     reducerPath: 'userApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/' }),
-    tagTypes: ['Games', 'Register', 'Verify_email', 'Login', 'Logout'],
+    tagTypes: ['Games', 'Register', 'Verify_email', 'Login', 'Logout', 'Profile'],
     endpoints: (builder) => ({
         getGames: builder.query<Game[], void>({
             query: () => "/games",
@@ -63,6 +63,13 @@ export const userApi = createApi({
                 credentials: "include"
             }),
             invalidatesTags: ['Logout']
+        }),
+        profile: builder.query<Partial<User>, void>({
+            query: () => ({
+                url: "/user/profile",
+                credentials: "include"
+            }),
+            providesTags: ['Profile']
         })
     })
 })
@@ -76,4 +83,5 @@ export const {
     useRegisterUserMutation,
     useVerifyEmailMutation,
     useLoginMutation,
-    useLogoutMutation } = userApi
+    useLogoutMutation,
+    useProfileQuery } = userApi

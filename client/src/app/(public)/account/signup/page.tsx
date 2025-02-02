@@ -1,6 +1,6 @@
 'use client'
 
-import StoreProvider from '@/app/StoreProvider'
+import StoreProvider from '@/src/app/StoreProvider'
 import ButtonSetMode from '@/components/ButtonSetMode'
 import FormRegister from '@/components/formUser/formRegister'
 import Image from 'next/image'

@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
-import { ApiResponseGames, Game } from '../../utils/types/GameTypes';
+import { ApiResponseGames } from '../../utils/types/GameTypes';
 import { PrismaClient } from '@prisma/client';
+import { GetGameDetail } from '../service/Game';
+import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
@@ -69,18 +71,17 @@ export const GetOrderingByRating = async (
     }
 };
 
-export const GetDetailGame = async (req: Request, res: Response) => {
+export const GetGameById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const response = await fetch(`${process.env.BASE_URL}/games/${id}?key=${process.env.API_KEY}`, {
-            method: 'GET',
-            headers: {
-                "Content-type": "application/json",
-            },
-        });
+        const game = await GetGameDetail(id);
 
-        const data = await response.json() as Game;
-        res.status(200).json(data);
+        if (!game) {
+            res.status(400).json({ message: "Este game não existe na base de dados" });
+            return;
+        }
+
+        res.status(200).json({ game });
     } catch (error) {
         res.status(500).json({ message: `Erro ao retornar detalhes do jogo. ${error}` })
     }
@@ -130,35 +131,55 @@ export const GetGamesByGenre = async (req: Request, res: Response) => {
     }
 }
 
-export const AddGameToFavorite = async (req: Request, res: Response) => {
+export const GameToFavorite = async (req: Request, res: Response) => {
     try {
-        const {user,gameId} :
-        {user:string,gameId:string} = req.body;
+        const { gameId }:
+            { gameId: string } = req.body;
 
-        if (!user || !gameId){
-            res.status(400).json({message:"Campos obrigatórios não informados"});
+        const acessToken = req.cookies.AcessToken;
+
+        if (!acessToken) {
+            res.status(400).json({ message: "Usuário não está autenticado." });
             return;
         }
 
-        const game = await GetDetailGame(req, res);
+        const payload =
+            jwt.verify(acessToken, process.env.JWT_SECRET_KEY as string) as { userId: string }
 
-        if (!game){
-            res.status(404).json({message:"Esse jogo não existe na base de dados"});
+        const userId = payload.userId;
+
+        if (!userId || !gameId) {
+            res.status(400).json({ message: "Campos obrigatórios não informados" });
             return;
         }
 
-        if (await prisma.favoriteGame.findMany({where: {userId:user}})){
-            res.status(400).json({message:"O jogo ja esta nos seus favoritos"});
+        const game = await GetGameDetail(gameId);
+
+        if (!game) {
+            res.status(404).json({ message: "Esse jogo não existe na base de dados" });
+            return;
+        }
+
+        const gameIsFavorite = await prisma.favoriteGame.findFirst({ where: { userId: userId } });
+
+        if (gameIsFavorite) {
+            await prisma.favoriteGame.delete({
+                where: {
+                    id: gameIsFavorite.id
+                }
+            })
+
+            res.status(400).json({ message: "O game foi removido dos seus favoritos" });
             return;
         }
 
         const userUpdated = await prisma.user.update({
-            where:{
-                id: user
+            where: {
+                id: userId
             },
-            data:{
+            data: {
                 favorites: {
-                    create:{
+                    create: {
                         id: game.id,
                         title: game.name,
                         image: game.background_image,
@@ -167,13 +188,14 @@ export const AddGameToFavorite = async (req: Request, res: Response) => {
             }
         })
 
-        res.status(200).json({message:`Game favoritado com sucesso!`,
+        res.status(200).json({
+            message: `Game favoritado com sucesso!`,
             user: userUpdated
         },
-            
+
         )
-        
+
     } catch (error) {
-        res.status(500).json({message : "Não foi possível favoritar o game"})
+        res.status(500).json({ message: "Não foi possível favoritar o game" })
     }
 }
