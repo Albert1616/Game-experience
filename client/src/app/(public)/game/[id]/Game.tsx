@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { useGetGameByIdQuery } from '@/services/api';
+import { useGetGameByIdQuery } from '@/src/services/api';
 import { CircularProgress, Rating } from '@mui/material';
 import { StarIcon } from 'lucide-react';
 import React, { useState } from 'react'
@@ -14,7 +14,7 @@ type Props = {
 }
 
 const Game = ({ id }: Props) => {
-    const { data: game, isLoading, isError } = useGetGameByIdQuery(id);
+    const { data: game, isLoading, isError } = useGetGameByIdQuery(id)
 
     const [seeMore, setSeeMore] = useState<boolean>(false);
     const Tag = (name: string) => {
@@ -55,7 +55,7 @@ const Game = ({ id }: Props) => {
                     height={800}
                     quality={100}
                     priority
-                    className="bg-cover bg-center w-full max-h-full select-none" />
+                    className="bg-cover bg-center bg-fixed w-full max-h-full select-none" />
                 <div className='absolute w-full top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center'>
                     <h1 className="text-7xl text-white font-extrabold text-center">{game!.name}</h1>
                     <div className='flex items-center justify-center gap-1'>
@@ -81,11 +81,11 @@ const Game = ({ id }: Props) => {
                         }>
                             {game!.description_raw}
                         </p>
-                        {!seeMore && game!.description_raw.length > 200 && (
+                        {!seeMore && game?.description_raw && game.description_raw.length > 200 && (
                             <div className='absolute bottom-0 w-full border-none bg-gradient-to-b from-transparent to-white h-2/5' />
                         )}
                     </div>
-                    {game!.description_raw.length > 200 && (
+                    {game?.description_raw && game.description_raw.length > 200 && (
 
                         <p className='bg-transparent hover:bg-transparent hover:underline shadow-none text-xl text-left font-bold text-red-500
                     cursor-pointer flex items-center gap-1'
@@ -97,20 +97,23 @@ const Game = ({ id }: Props) => {
                         </p>
                     )}
                 </div>
-                {game!.genres.length > 0 && (
+                {game?.genres && game!.genres.length > 0 && (
                     <div className="flex flex-col gap-1">
                         <h2 className='text-black dark:text-white text-3xl font-bold'>Gêneros</h2>                            <div className="flex gap-1 items-center">
-                            {game!.genres && game!.genres.map((genre) => (
-                                Tag(genre.name)
+                            {game?.genres && game.genres && game!.genres.map((genre, index) => (
+                                <div key={index}>{Tag(genre.name)}</div>
                             ))}
                         </div>
                     </div>
                 )}
-                {game!.tags.length > 0 && (
+                {game?.tags && game.tags.length > 0 && (
                     <div className="flex flex-col gap-1 mt-6">
                         <h2 className='text-black dark:text-white text-3xl font-bold'>Tags</h2>                            <div className="flex flex-wrap gap-1">
-                            {game!.tags && game!.tags.length > 0 ? game!.tags.map((tag) => (
-                                Tag(tag.name)
+                            {game?.tags && game.tags.length > 0 ? game!.tags.map((tag, index) => (
+                                <div key={index}>
+                                    {Tag(tag.name)}
+                                </div>
+
                             )) : <p className="text-xl font-bold">-</p>}
                         </div>
                     </div>

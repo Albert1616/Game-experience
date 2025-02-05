@@ -81,7 +81,7 @@ export const GetGameById = async (req: Request, res: Response) => {
             return;
         }
 
-        res.status(200).json({ game });
+        res.status(200).json(game);
     } catch (error) {
         res.status(500).json({ message: `Erro ao retornar detalhes do jogo. ${error}` })
     }
@@ -197,5 +197,26 @@ export const GameToFavorite = async (req: Request, res: Response) => {
 
     } catch (error) {
         res.status(500).json({ message: "Não foi possível favoritar o game" })
+    }
+}
+
+export const isFavorite = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.body;
+
+        const gameFavorite = await prisma.favoriteGame.findUnique({
+            where: {
+                id: id
+            }
+        })
+
+        if (!gameFavorite) {
+            res.status(401).json({ favorito: false });
+            return;
+        }
+
+        res.status(200).json({ favorito: true });
+    } catch (error) {
+        res.status(500).json({ message: "Ocorreu um erro ao verificar se o jogo é favorito." })
     }
 }

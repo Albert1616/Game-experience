@@ -1,8 +1,5 @@
-import StoreProvider from "@/src/app/StoreProvider";
 import Game from "./Game";
-import Header from "@/components/header/Header";
-import { Suspense } from "react";
-import { CircularProgress } from "@mui/material";
+import Header from "@/src/components/header/Header";
 
 interface PropsUrl {
     params: Promise<{ id: string }>
@@ -11,12 +8,9 @@ interface PropsUrl {
 export default async function GamePage({ params }: PropsUrl) {
     const id = (await params).id;
     return (
-        <StoreProvider>
+        <section>
             <Header />
             <Game id={id} />
-            {/* <Suspense fallback={<CircularProgress />}>
-                <Game id={params.id} />
-            </Suspense> */}
-        </StoreProvider>
+        </section>
     )
 }

@@ -1,7 +1,6 @@
 'use client'
 
-import Header from '@/components/header/Header'
-import { useProfileQuery } from '@/services/api'
+import { useProfileQuery } from '@/src/services/api'
 import { CircularProgress } from '@mui/material'
 import React from 'react'
 

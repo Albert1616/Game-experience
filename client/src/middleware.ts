@@ -10,8 +10,6 @@ const public_routes = [
 const REDIRECT_WHEN_NOT_AUTHENTICATE_ROUTE = '/';
 
 export const middleware = (req: NextRequest) => {
-
-    console.log("FUNCIONOU")
     const path = req.nextUrl.pathname;
     const publicRoute = public_routes.find((route) => route.path === path);
     const token = req.cookies.get("AcessToken");

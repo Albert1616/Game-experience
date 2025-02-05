@@ -6,7 +6,7 @@ import { generateToken } from "../../utils/GenerateToken";
 import { SetCookies } from "../../utils/SetCookies";
 import { RefreshAcessToken } from "../../utils/RefreshAcessToken";
 import { SendPasswordResetLinkEmail } from '../../utils/SendEmailPasswordReset'
-import jwt from 'jsonwebtoken'
+import jwt, { decode } from 'jsonwebtoken'
 
 const prisma = new PrismaClient();
 
@@ -214,6 +214,39 @@ export const Login = async (req: Request, res: Response) => {
 
     } catch (error) {
         res.status(500).json({ message: `Falha na autenticação. ${error}` })
+    }
+}
+
+export const VerifySession = async (req: Request, res: Response) => {
+    try {
+        const acessToken = req.cookies.AcessToken;
+
+        if (!acessToken) {
+            res.status(400).json({ message: "Não foi passado o token." });
+            return;
+        }
+
+        const payload = jwt.verify(acessToken, process.env.JWT_SECRET_KEY!) as { userId: string, exp: number };
+
+        const user = await prisma.user.findUnique({
+            where: {
+                id: payload.userId
+            }
+        })
+
+        if (!user) {
+            res.status(404).json({ message: "Não existe usuário vinculado a este token!" });
+            return;
+        }
+
+        if (Math.floor(Date.now() / 1000) > payload.exp) {
+            res.status(401).json({ message: "O token está expirado!" });
+            return;
+        }
+
+        res.status(200).json({ message: "Usuário logado" });
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao verificar sessão do usuário!" });
     }
 }
 

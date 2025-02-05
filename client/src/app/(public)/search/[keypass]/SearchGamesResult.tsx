@@ -1,7 +1,7 @@
 'use client'
 
-import CardGameResult from '@/components/search/CardGameResult'
-import { useSearchGamesQuery } from '@/services/api'
+import CardGameResult from '@/src/components/search/CardGameResult'
+import { useSearchGamesQuery } from '@/src/services/api'
 import { CircularProgress } from '@mui/material'
 import React from 'react'
 
