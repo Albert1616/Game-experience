@@ -4,7 +4,9 @@ import React from 'react'
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import { useRouter } from 'next/navigation';
-import { Heart } from 'lucide-react';
+import { useFavoriteGameMutation, useGameIsFavoriteQuery } from '@/src/services/api';
+import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
+
 
 
 interface PropsCard extends Game {
@@ -12,9 +14,13 @@ interface PropsCard extends Game {
 }
 
 function CardSlide({ type, ...props }: PropsCard) {
+
+    const {data: isFavorite, isError, isLoading} = useGameIsFavoriteQuery(props.id);
+    const [gameFavorite, {isError, isLoading}] = useFavoriteGameMutation(props.id);
+
     const route = useRouter();
 
-    const openDetails = (id: number) => {
+    const openDetails = (id: string) => {
         route.push(`/game/${id}`);
     }
 
@@ -23,7 +29,9 @@ function CardSlide({ type, ...props }: PropsCard) {
             style={{
                 backgroundImage: `url(${props.background_image})`,
             }} onClick={() => openDetails(props.id)}>
-            <Heart className='absolute top-1 right-1' size={30} />
+            <button className='absolute top-1 right-1 text-lg'>
+                {isFavorite ? <MdFavoriteBorder /> : <MdFavorite/>}
+            </button>
             <div className='h-full w-full p-3 bg-gradient-to-b from-transparent to-black/60 hover:to-black/20 flex flex-col gap-4 justify-end items-center'>
                 <h1 className='text-lg md:text-2xl sm:text-xl text-center font-extrabold'>{props.name}</h1>
                 {type === typesGames.RATING &&
@@ -33,14 +41,6 @@ function CardSlide({ type, ...props }: PropsCard) {
                         <h3 className='font-extrabold text-sm md:text-lg'>{props.rating}/5</h3>
                     </div>
                 }
-                {/* {type === typesGames.LATEST &&
-                    <ul className='flex flex-wrap gap-2'>
-                        {props.tags!.map((tag, index) => (
-                            index <= 5 && <li key={tag.id}
-                                className='text-sm rounded-lg bg-gray-400 text-black py-[2px] px-1'>{tag.name}</li>
-                        ))}
-                    </ul>
-                } */}
             </div>
         </div>
     )

@@ -6,7 +6,7 @@ import { generateToken } from "../../utils/GenerateToken";
 import { SetCookies } from "../../utils/SetCookies";
 import { RefreshAcessToken } from "../../utils/RefreshAcessToken";
 import { SendPasswordResetLinkEmail } from '../../utils/SendEmailPasswordReset'
-import jwt, { decode } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 const prisma = new PrismaClient();
 

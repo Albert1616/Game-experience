@@ -6,27 +6,9 @@ export const userApi = createApi({
     reducerPath: 'userApi',
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:8000/',
-        // prepareHeaders(headers, { endpoint }) {
-        //     if (endpoint === "verifySession") {
-        //         const acessToken = Cookies.get("AcessToken");
-        //         if (!acessToken) {
-        //             console.log("Acess token nao foi passado")
-        //         }
-
-        //         console.log(`Acess token ${acessToken}`);
-
-        //         if (acessToken) {
-        //             console.log(`Acess token ${acessToken}`);
-        //             headers.set('authorization', `Bearer ${acessToken}`);
-        //         }
-        //     }
-        //     return headers;
-        // },
     }),
     tagTypes: ['Games', 'Register', 'Verify_email',
         'Login', 'Logout', 'Profile', 'Verify_session'],
-
-
 
     endpoints: (builder) => ({
         getGames: builder.query<Game[], void>({
@@ -48,6 +30,23 @@ export const userApi = createApi({
         SearchGames: builder.query<Game[], String>({
             query: (query) => `/games/search?query=${query}`,
             providesTags: ['Games']
+        }),
+        gameIsFavorite: builder.query<Boolean, String>({
+            query: (id) => ({
+                url: `/games/isFavorite`,
+                method:'GET',
+                body: id,
+                credentials: "include"
+            }),
+            providesTags: ['Games']
+        }),
+        FavoriteGame: builder.mutation<{message:string}, String>({
+            query: (id) => ({
+                url: `/games/favorite`,
+                body: id,
+                credentials: 'include'
+            }),
+            invalidatesTags: ['Games']
         }),
         registerUser: builder.mutation<User, Partial<User>>({
             query: (body) => ({
@@ -117,4 +116,6 @@ export const {
     useLoginMutation,
     useLogoutMutation,
     useVerifySessionQuery,
-    useProfileQuery } = userApi
+    useProfileQuery,
+    useFavoriteGameMutation,
+useGameIsFavoriteQuery } = userApi

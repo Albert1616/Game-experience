@@ -16,7 +16,7 @@ interface Tag {
 }
 
 export interface Game {
-    id: number,
+    id: string,
     description_raw: string,
     name: string,
     background_image: string,

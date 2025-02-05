@@ -13,7 +13,7 @@ router.get("/search", SearchGames);
 router.get("/genre", GetGamesByGenre);
 
 // Proteced routes
-router.post("/favorites", SetHeaderBaeren, passport.authenticate('jwt', { session: false }), GameToFavorite);
+router.post("/favorite", SetHeaderBaeren, passport.authenticate('jwt', { session: false }), GameToFavorite);
 router.get("/isFavorite", SetHeaderBaeren, passport.authenticate('jwt', { session: false }), isFavorite);
 
 export default router;

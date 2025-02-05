@@ -1,15 +1,26 @@
+'use client'
+
 import { Game } from "@/src/utils/types";
 import Image from "next/image";
 import Tag from "../Tag";
 import Platform from "../Platform";
 import { AnimatePresence, motion } from 'framer-motion'
 import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 interface props {
   game: Game;
 }
 
+
 function GeneralGame({ game }: props) {
+  const route = useRouter();
+  
+  const openDetails = (id: string) => {
+    console.log("entrou");
+    route.push(`/game/${id}`);
+  }
+
   return (
     <AnimatePresence key={game.id} mode="wait">
       <motion.div
@@ -34,7 +45,9 @@ function GeneralGame({ game }: props) {
               {game.parent_platforms.map((parent, index) => <Platform key={index} platform={parent.platform.slug} />)}
             </div>
           </div>
-          <Button className="hidden md:flex py-6 bg-englishViolet hover:text-black 
+          <Button
+          onClick={() => openDetails(game.id)} 
+          className="hidden md:flex py-6 bg-englishViolet hover:text-black 
           hover:bg-primaryDark dark:hover:bg-primaryDark 
           text-lg mt-6 w-[12em] transition-colors duration-500">
             Veja mais

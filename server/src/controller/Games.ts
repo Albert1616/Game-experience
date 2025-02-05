@@ -169,7 +169,7 @@ export const GameToFavorite = async (req: Request, res: Response) => {
                 }
             })
 
-            res.status(400).json({ message: "O game foi removido dos seus favoritos" });
+            res.status(200).json({ message: "O game foi removido dos seus favoritos" });
             return;
         }
 
@@ -189,11 +189,8 @@ export const GameToFavorite = async (req: Request, res: Response) => {
         })
 
         res.status(200).json({
-            message: `Game favoritado com sucesso!`,
-            user: userUpdated
-        },
-
-        )
+            message: `Game favoritado com sucesso!`
+        })
 
     } catch (error) {
         res.status(500).json({ message: "Não foi possível favoritar o game" })
@@ -211,11 +208,11 @@ export const isFavorite = async (req: Request, res: Response) => {
         })
 
         if (!gameFavorite) {
-            res.status(401).json({ favorito: false });
+            res.status(401).json(false);
             return;
         }
 
-        res.status(200).json({ favorito: true });
+        res.status(200).json(true);
     } catch (error) {
         res.status(500).json({ message: "Ocorreu um erro ao verificar se o jogo é favorito." })
     }
