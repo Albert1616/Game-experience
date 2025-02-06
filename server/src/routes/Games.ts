@@ -14,6 +14,6 @@ router.get("/genre", GetGamesByGenre);
 
 // Proteced routes
 router.post("/favorite", SetHeaderBaeren, passport.authenticate('jwt', { session: false }), GameToFavorite);
-router.get("/isFavorite", SetHeaderBaeren, passport.authenticate('jwt', { session: false }), isFavorite);
+router.get("/isFavorite/:id", SetHeaderBaeren, passport.authenticate('jwt', { session: false }), isFavorite);
 
 export default router;

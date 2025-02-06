@@ -34,6 +34,7 @@ function GeneralGame({ game }: props) {
           alt="Game banner"
           height={1200}
           width={1500}
+          priority
           className="w-full h-full" />
         <div className="absolute w-full h-full inset-0 bg-gradient-to-t to-transparent from-black flex flex-col xl:gap-4 justify-end items-start p-5">
           <h1 className="text-xl md:text-4xl lg:text-5xl font-extrabold">{game.name}</h1>

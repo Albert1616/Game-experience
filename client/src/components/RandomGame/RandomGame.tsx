@@ -2,6 +2,7 @@ import { Game } from '@/src/utils/types'
 import React, { useEffect, useState } from 'react'
 import CardRandomGame from './CardRandomGame'
 import { useGetGamesByGenreQuery } from '@/src/services/api'
+import { CircularProgress } from '@mui/material'
 
 type props = {
     genre: string
@@ -9,7 +10,7 @@ type props = {
 
 const RandomGame = ({ genre }: props) => {
     const [game, setGame] = useState<Game>({
-        id: 0,
+        id: "0",
         description_raw: '',
         name: '',
         background_image: '',
@@ -20,7 +21,7 @@ const RandomGame = ({ genre }: props) => {
     })
 
     const { data: games, isLoading } = useGetGamesByGenreQuery(genre);
-
+    
     useEffect(() => {
         if (!isLoading && games && games.length > 0) {
             let indexCurrent = Math.floor(Math.random() * games.length);
@@ -30,6 +31,8 @@ const RandomGame = ({ genre }: props) => {
             setGame(games[indexCurrent]);
         }
     }, [games, isLoading, genre]);
+    
+    if (isLoading) return <div className='w-full h-full flex items-center justify-center'><CircularProgress size={60}/></div>
     return (
         <div className='w-full h-full'>
             <CardRandomGame game={game} />

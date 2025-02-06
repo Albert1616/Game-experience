@@ -44,10 +44,10 @@ const SlideGeneralGame = () => {
               <Image
                 src={game.background_image}
                 alt='Game banner'
-                width={400}
-                height={400}
+                width={700}
+                height={700}
                 quality={100}
-                className='w-full h-full' />
+                className='w-full h-full bg-cover' />
             </CarouselItem>
           ))}
         </CarouselContent>

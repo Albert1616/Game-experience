@@ -199,11 +199,11 @@ export const GameToFavorite = async (req: Request, res: Response) => {
 
 export const isFavorite = async (req: Request, res: Response) => {
     try {
-        const { id } = req.body;
+        const { id } = req.params;
 
         const gameFavorite = await prisma.favoriteGame.findUnique({
             where: {
-                id: id
+                id: Number(id)
             }
         })
 

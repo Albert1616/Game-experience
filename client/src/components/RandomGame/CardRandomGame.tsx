@@ -1,13 +1,14 @@
 import { Game } from '@/src/utils/types'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { Skeleton } from '../ui/skeleton'
 
 type Props = {
     game: Game
 }
 
 const CardRandomGame = ({ game }: Props) => {
-    return (
+    return (game.background_image != '' ? (
         <div
             className='h-[30em] flex flex-col gap-2'>
             <motion.div
@@ -27,7 +28,10 @@ const CardRandomGame = ({ game }: Props) => {
             </motion.div>
             <h1 className='text-black dark:text-white text-lg md:text-xl font-bold text-center'>{game.name}</h1>
         </div>
-    )
+    ) : (
+        <Skeleton className='h-[30em] w-full'/>
+    ))
+    
 }
 
 export default CardRandomGame

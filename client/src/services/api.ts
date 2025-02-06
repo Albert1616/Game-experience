@@ -33,17 +33,16 @@ export const userApi = createApi({
         }),
         gameIsFavorite: builder.query<Boolean, String>({
             query: (id) => ({
-                url: `/games/isFavorite`,
-                method:'GET',
-                body: id,
+                url: `/games/isFavorite/${id}`,
                 credentials: "include"
             }),
             providesTags: ['Games']
         }),
         FavoriteGame: builder.mutation<{message:string}, String>({
-            query: (id) => ({
+            query: (body) => ({
                 url: `/games/favorite`,
-                body: id,
+                method: 'POST',
+                body,
                 credentials: 'include'
             }),
             invalidatesTags: ['Games']
