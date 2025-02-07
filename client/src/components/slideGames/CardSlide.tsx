@@ -19,9 +19,9 @@ interface PropsCard extends Game {
 function CardSlide({ type, ...props }: PropsCard) {
     const isAuth = useAppSelector((state) => state.global.isAuth);
     const dispatch = useAppDispatch();
-    
-    const {data: isFavorite, isError, isLoading} = isAuth ? 
-    useGameIsFavoriteQuery(props.id) : {data: null, isError:false, isLoading: false};
+
+    const { data: isFavorite, isError, isLoading } = isAuth ?
+        useGameIsFavoriteQuery(props.id) : { data: null, isError: false, isLoading: false };
     const [FavoriteGame] = useFavoriteGameMutation();
 
     const route = useRouter();
@@ -30,11 +30,12 @@ function CardSlide({ type, ...props }: PropsCard) {
         route.push(`/game/${id}`);
     }
 
-    const handleChangeToFavorite = (id:string) => {
-        if (!isAuth){
+    const handleChangeToFavorite = (id: string) => {
+        if (!isAuth) {
             toast.warning("Faça login para poder adicionar games a os seus favoritos.");
             dispatch(setLoginModalIsOpen(true));
-        }else{
+        } else {
+            console.log(`ID: ${id}`);
             FavoriteGame(id);
         }
     }
@@ -44,16 +45,16 @@ function CardSlide({ type, ...props }: PropsCard) {
             style={{
                 backgroundImage: `url(${props.background_image})`,
             }}>
-            <button 
-            className='absolute top-1 right-1 text-3xl'
-            onClick={() => handleChangeToFavorite(props.id)}>
-                {isAuth && isFavorite ? <MdFavorite /> : <MdFavoriteBorder/>}
+            <button
+                className='absolute top-1 right-1 text-3xl'
+                onClick={() => handleChangeToFavorite(props.id)}>
+                {isAuth && isFavorite ? <MdFavorite /> : <MdFavoriteBorder />}
             </button>
             <div className='h-full w-full p-3 bg-gradient-to-b from-transparent to-black/70 flex flex-col gap-4 justify-end items-center'>
-                <h1 
-                className='text-lg md:text-2xl sm:text-xl text-center font-extrabold cursor-pointer
+                <h1
+                    className='text-lg md:text-2xl sm:text-xl text-center font-extrabold cursor-pointer
                 text-gray-300 hover:text-white hover:font-extrabold'
-                onClick={() => openDetails(props.id)}>{props.name}</h1>
+                    onClick={() => openDetails(props.id)}>{props.name}</h1>
                 {type === typesGames.RATING &&
                     <div className='flex flex-col items-center gap-2'>
                         <Rating value={props.rating} icon={<StarIcon />}

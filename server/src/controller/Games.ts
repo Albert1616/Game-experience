@@ -136,6 +136,11 @@ export const GameToFavorite = async (req: Request, res: Response) => {
         const { gameId }:
             { gameId: string } = req.body;
 
+        if (!gameId) {
+            res.status(400).json({ message: "Campos obrigatórios não informados" });
+            return;
+        }
+
         const acessToken = req.cookies.AcessToken;
 
         if (!acessToken) {
@@ -147,12 +152,6 @@ export const GameToFavorite = async (req: Request, res: Response) => {
             jwt.verify(acessToken, process.env.JWT_SECRET_KEY as string) as { userId: string }
 
         const userId = payload.userId;
-
-        if (!userId || !gameId) {
-            res.status(400).json({ message: "Campos obrigatórios não informados" });
-            return;
-        }
-
         const game = await GetGameDetail(gameId);
 
         if (!game) {
@@ -199,7 +198,7 @@ export const GameToFavorite = async (req: Request, res: Response) => {
 
 export const isFavorite = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
+        const { id } = req.query;
 
         const gameFavorite = await prisma.favoriteGame.findUnique({
             where: {
