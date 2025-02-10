@@ -10,7 +10,7 @@ export const generateToken = async (user: User) => {
         const payload = { userId: user.id };
 
         // ACESS TOKEN EXPIRATION = 1800 SECONDS
-        const acessTokenExpiration = 60 * 30
+        const acessTokenExpiration = 60 * 60
         // DEFINE ACESS TOKEN
         const acessToken = jwt.sign({ userId: user.id },
             process.env.JWT_SECRET_KEY!, { expiresIn: acessTokenExpiration })

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { GameToFavorite, GetGameById, GetGames, GetGamesByGenre, GetOrderingByRating, GetOrderingByReleased, isFavorite, SearchGames } from "../controller/Games";
+import { GameToFavorite, GetFavoriteGamesByUser, GetGameById, GetGames, GetGamesByGenre, GetOrderingByRating, GetOrderingByReleased, isFavorite, SearchGames } from "../controller/Games";
 import { SetHeaderBaeren } from "../middlewares/SetHeaderBaeren";
 import passport from "passport";
 
@@ -15,5 +15,6 @@ router.get("/genre", GetGamesByGenre);
 // Proteced routes
 router.post("/favorite", SetHeaderBaeren, passport.authenticate('jwt', { session: false }), GameToFavorite);
 router.get("/isFavorite", SetHeaderBaeren, passport.authenticate('jwt', { session: false }), isFavorite);
+router.get("/userFavorites", SetHeaderBaeren, passport.authenticate('jwt', { session: false}), GetFavoriteGamesByUser);
 
 export default router;

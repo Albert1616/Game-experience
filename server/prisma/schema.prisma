@@ -24,8 +24,8 @@ model User {
 
 model FavoriteGame {
   id Int @id 
-  title String
-  image String
+  name String
+  background_image String
   userId String
 
   user User @relation("UserFavorites",references: [id], fields: [userId]) 

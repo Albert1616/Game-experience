@@ -159,7 +159,7 @@ export const GameToFavorite = async (req: Request, res: Response) => {
             return;
         }
 
-        const gameIsFavorite = await prisma.favoriteGame.findFirst({ where: { userId: userId } });
+        const gameIsFavorite = await prisma.favoriteGame.findFirst({ where: { id: Number(gameId), userId: userId } });
 
         if (gameIsFavorite) {
             await prisma.favoriteGame.delete({
@@ -168,29 +168,25 @@ export const GameToFavorite = async (req: Request, res: Response) => {
                 }
             })
 
-            res.status(200).json({ message: "O game foi removido dos seus favoritos" });
+            res.status(200).json({ message: "O game foi removido dos seus favoritos",
+                method: "Delete"
+             });
             return;
-        }
-
-        const userUpdated = await prisma.user.update({
-            where: {
-                id: userId
-            },
-            data: {
-                favorites: {
-                    create: {
-                        id: game.id,
-                        title: game.name,
-                        image: game.background_image,
-                    }
+        }else{
+            await prisma.favoriteGame.create({
+                data:{
+                    id: Number(gameId),
+                    userId: userId,
+                    background_image: game.background_image,
+                    name: game.name,
                 }
-            }
-        })
-
-        res.status(200).json({
-            message: `Game favoritado com sucesso!`
-        })
-
+            })
+    
+            res.status(200).json({
+                message: `Game favoritado com sucesso!`,
+                method: "Add"   
+            })
+        }
     } catch (error) {
         res.status(500).json({ message: "Não foi possível favoritar o game" })
     }
@@ -214,5 +210,28 @@ export const isFavorite = async (req: Request, res: Response) => {
         res.status(200).json(true);
     } catch (error) {
         res.status(500).json({ message: "Ocorreu um erro ao verificar se o jogo é favorito." })
+    }
+}
+
+export const GetFavoriteGamesByUser = async (req: Request, res: Response) => {
+    try {
+        const acessToken = req.cookies.AcessToken;
+
+        const payload = jwt.verify(acessToken, process.env.JWT_SECRET_KEY as string) as { userId: string };
+
+        if (!payload){
+            res.status(400).json({message: "Token inválido!"});
+            return;
+        }
+
+        const games = await prisma.favoriteGame.findMany({
+            where:{
+                userId: payload.userId
+            }
+        })
+
+        res.status(200).json(games);
+    } catch (error) {
+        res.status(500).json({message: `Ocorreu um erro ao retornar games favoritos do usuário ${error}`});
     }
 }

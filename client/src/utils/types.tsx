@@ -36,7 +36,7 @@ export interface Session {
 
 export interface User {
     id: string,
-    name: string,
+    nome: string,
     email: string,
     password: string,
     confirm_password: string

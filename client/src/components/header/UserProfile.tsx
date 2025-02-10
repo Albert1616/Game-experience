@@ -35,7 +35,7 @@ const UserProfile = () => {
         <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
         <DropdownMenuSeparator className='bg-black/20' />
         <DropdownMenuItem>
-          <Link href="/user/profile" className='text-black font-extrabold hover:text-black/80 hover:underline'>
+          <Link href="/profile" className='text-black font-extrabold hover:text-black/80 hover:underline'>
             Profile
           </Link>
         </DropdownMenuItem>

@@ -41,7 +41,7 @@ export const userApi = createApi({
             }),
             providesTags: ['Games']
         }),
-        FavoriteGame: builder.mutation<{ message: string }, String>({
+        FavoriteGame: builder.mutation<{ message: string, method: string }, String>({
             query: (id) => ({
                 url: `/games/favorite`,
                 method: 'POST',
@@ -54,6 +54,16 @@ export const userApi = createApi({
                 credentials: "include"
             }),
             invalidatesTags: ['Games']
+        }),
+        GetGamesFavorites: builder.query<Game[], void>({
+            query: () => ({
+                url: "/games/userFavorites",
+                headers: {
+                    "Content-type":"Application/json"
+                },
+                credentials: "include"
+            }),
+            providesTags: ["Games"]
         }),
         registerUser: builder.mutation<User, Partial<User>>({
             query: (body) => ({
@@ -125,4 +135,5 @@ export const {
     useVerifySessionQuery,
     useProfileQuery,
     useFavoriteGameMutation,
-    useGameIsFavoriteQuery } = userApi
+    useGameIsFavoriteQuery,
+useGetGamesFavoritesQuery } = userApi
